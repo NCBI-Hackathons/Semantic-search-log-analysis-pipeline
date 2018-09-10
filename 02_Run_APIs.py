@@ -79,7 +79,7 @@ import time
 import os
 
 # Set working directory
-os.chdir('/Users/johnsonnicl/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-')
+os.chdir('/Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-')
 
 
 localDir = '02_Run_APIs_files/'
