@@ -85,11 +85,11 @@ os.chdir('/Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site
 localDir = '02_Run_APIs_files/'
 
 # If you're starting a new session an this is not already open
-listOfUniqueUnassignedAfterGS = '01_Pre-processing_files/listOfUniqueUnassignedAfterGS.xlsx'
+listOfUniqueUnassignedAfterGS = 'listOfUniqueUnassignedAfterGS.xlsx'
 listOfUniqueUnassignedAfterGS = pd.read_excel(listOfUniqueUnassignedAfterGS)
 
 # Bring in historical file of (somewhat edited) matches
-GoldStandard = '01_Pre-processing_files/GoldStandard.xlsx'
+GoldStandard = 'GoldStandard.xlsx'
 GoldStandard = pd.read_excel(GoldStandard)
 
 
@@ -125,7 +125,7 @@ https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html,
 to be used to put search terms into huge bins. Should be integrated into 
 GoldStandard and be available at the end of the ML matching process.
 '''
-SemanticNetworkReference = '01_Pre-processing_files/SemanticNetworkReference.xlsx'
+SemanticNetworkReference = 'SemanticNetworkReference.xlsx'
 
 
 ''' 
@@ -174,7 +174,7 @@ leaf yellow and leave yellow. Each string would be matched exactly to the
 strings in the normalized string index to return a result. 
 
 Re-start:
-# listOfUniqueUnassignedAfterGS = pd.read_excel('01_Pre-processing_files/listOfUniqueUnassignedAfterGS.xlsx')
+# listOfUniqueUnassignedAfterGS = pd.read_excel('listOfUniqueUnassignedAfterGS.xlsx')
 
 listToCheck6 = pd.read_excel(localDir + 'listToCheck6.xlsx')
 listToCheck7 = pd.read_excel(localDir + 'listToCheck7.xlsx')
@@ -335,7 +335,7 @@ To re-start
 unassignedAfterGS = pd.read_excel(localDir + 'unassignedAfterGS.xlsx')
 logAfterGoldStandard = pd.read_excel(localDir + 'logAfterGoldStandard.xlsx')
 
-listFromApi = pd.read_excel('02_UMLS_API_files/listFromApi1-April-May.xlsx')
+listFromApi = pd.read_excel('listFromApi1-April-May.xlsx')
 assignedByUmlsApi = pd.read_excel(localDir + 'assignedByUmlsApi.xlsx')
 
 # Fix temporary issue of nulls in SemanticTypeName, and wrong col name semTypeName
@@ -415,7 +415,7 @@ in first batch, or not.
 '''
 
 
-logAfterGoldStandard = '01_Pre-processing_files/logAfterGoldStandard.xlsx'
+logAfterGoldStandard = 'logAfterGoldStandard.xlsx'
 logAfterGoldStandard = pd.read_excel(logAfterGoldStandard)
 
 
@@ -555,7 +555,7 @@ GoldStandard.drop(58027, inplace=True)
 
 
 # Write out the updated GoldStandard
-writer = pd.ExcelWriter('01_Pre-processing_files/GoldStandard.xlsx')
+writer = pd.ExcelWriter(GoldStandard.xlsx')
 GoldStandard.to_excel(writer,'GoldStandard')
 writer.save()
 
@@ -675,8 +675,8 @@ writer.save()
 OPTIONS
 
 # Bring in from file
-listToCheck3 = pd.read_excel('01 Pre-process/listToCheck3.xlsx')
-listToCheck4 = pd.read_excel('01 Pre-process/listToCheck4.xlsx')
+listToCheck3 = pd.read_excel('listToCheck3.xlsx')
+listToCheck4 = pd.read_excel('listToCheck4.xlsx')
 
 listToCheck1 = unassignedAfterGS
 listToCheck2 = unassignedAfterGS.iloc[5001:10000]
