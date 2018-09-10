@@ -94,7 +94,7 @@ GoldStandard = pd.read_excel(GoldStandard)
 
 
 
-# Get API key ('e2f15391-871e-4b54-86e5-0a52e1a879cc')
+# Get API key
 def get_umls_api_key(filename=None):
     key = os.environ.get('UMLS_API_KEY', None)
     if key is not None:
