@@ -555,7 +555,7 @@ GoldStandard.drop(58027, inplace=True)
 
 
 # Write out the updated GoldStandard
-writer = pd.ExcelWriter(GoldStandard.xlsx')
+writer = pd.ExcelWriter('GoldStandard.xlsx')
 GoldStandard.to_excel(writer,'GoldStandard')
 writer.save()
 
