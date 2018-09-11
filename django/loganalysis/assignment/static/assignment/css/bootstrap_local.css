@@ -1,0 +1,491 @@
+@charset "utf-8";
+/* CSS Document, local mods to Bootstrap */
+
+body {
+	/*font-family: Verdana, Helvetica, Arial, sans-serif;*/
+}
+
+h3 {
+	font-size:130%;
+}
+/*.container {
+	margin-left:0;
+}*/
+
+.page-header {
+	font-size:180%;
+	padding-top: 25px;
+}
+
+.siteTagLine {
+	font-size:90%;
+	font-style: italic;
+	margin-top:2px;
+	margin-bottom:0;
+}
+
+/*.row {
+	margin-left: -5px;
+}*/
+
+/*.row p, .row td {
+	font-size:85%;
+}*/
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 4px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+  
+.sidebar h2 {
+	font-size:120%;
+	margin-bottom: 2px;
+}
+
+.sidebar h3 {
+	font-size:140%;
+	font-weight:bold;
+	margin-top:2em;
+}
+
+.siteTagLine {
+	font-size:95%;
+	font-weight:normal;	
+}
+
+
+/* ========== dashboard - C3/D3 charts, Bootstrap progress bars, etc. ================ */
+
+
+.ThermometerBarBox {
+	width:94%;
+}
+
+.counts .facetLabel {
+	width:64%;
+	font-weight:bold;
+}
+
+
+
+/* ========== analystUI - group-and-count rollups ================ */
+
+.analystUI {
+	display:block;
+	width:100%;
+}
+
+.analystUI div {
+    width:100%;
+}
+
+.analystUI .moreRollups, .analystUI .tblTaskCompCustSeg, .analystUI .tblVisitFreqCustSeg {
+    background-color:#d3d3d3;
+    padding: 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.analystUI .rollupContent {
+    display: none;
+    padding : 5px;
+}
+
+.box {
+	position:relative;
+	float:left;
+	min-width:19em;
+	max-width: 22em;
+	min-height: 12em;
+	padding: .4em;
+	background-color: #FFF;
+	margin: 0 2px 4px 0;
+	/*display:block;	*/
+}
+
+.rollup-4col {
+	max-height:30ex;
+	border: 1px solid #CCC;
+	overflow:auto;
+}
+
+.rollup-4col table {
+	table-layout:fixed;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.rollup-4col table thead th, .rollup-4col table tbody td {
+	padding:2px;
+	word-wrap: break-word;
+}
+
+.rollup-4col .facetLabel {
+	width:55%;
+	font-weight:bold;
+}
+
+
+h2 {
+	font-size:160%;
+}
+
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-right: 4px;
+    padding-left: 6px;
+}
+
+
+section {
+	position:relative;
+	float:left;
+	min-width:20em;
+	max-width: 22em;
+	padding: .4em;
+	background-color: #FFF;
+	margin: 0 2px 4px 0;
+	/*display:block;	*/
+}
+
+section h2 {
+	font-size:120%;
+	margin-top: 6px;
+	margin-bottom: 2px;
+}
+
+
+.counts {
+	max-height:30ex;
+	border: 1px solid #CCC;
+	overflow:auto;
+}
+
+.panel {
+	padding:4px;
+}
+
+.panel h2 {
+	 font-size:120%;
+	 margin-top:4px;
+	 padding-top:0;
+	 color:gray;
+}
+
+.panel h3 {
+	font-size:100%;
+	font-weight:bold;
+}
+
+.counts table {
+	table-layout:fixed;
+	width: 100%;
+	word-wrap: break-word;
+	/*font-size: 85%;*/
+}
+
+table thead th, .counts table tbody td {
+	padding:2px;
+	word-wrap: break-word;
+	/*font-size:85%;*/
+}
+
+
+
+/* enable horizontal scrolling in many-column tables */
+.table-responsive {
+	min-height: .01%;
+	overflow-x: visible;
+}
+
+div.table-responsive th, div.table-responsive td {
+	/*font-size: 90%;*/
+/*	text-align: left;*/
+	vertical-align: top;
+}
+
+div.table-responsive .table tbody tr td {
+	padding: 2px 4px;
+}
+
+
+/*.table-striped tr {
+	border:0;
+	border-collapse:collapse;
+}*/
+
+/*.table-striped tr th {
+	vertical-align:middle;
+	/*background-color: #7080FF;*/
+	/*color:white;*/
+	/*text-align:center;
+} */
+
+.table-striped tr td {
+	/*text-align:left;*/
+	vertical-align:top;
+}
+
+.table-striped tr .header {
+	/*background-image: url(../images/bg.gif);*/
+	background-repeat: no-repeat;
+	background-position: right center;
+	cursor: pointer;
+	text-align:left;
+	vertical-align:middle;
+}
+
+.table-striped tr .asc {
+	/*background-image: url(../images/asc.gif);*/
+	background-repeat: no-repeat;
+	background-position: right center;
+	text-align:left;
+	cursor: pointer; 
+	vertical-align:middle;       
+}
+
+.table-striped tr .desc {
+	/*background-image: url(../images/desc.gif);*/
+	background-repeat: no-repeat;
+	background-position: right center;
+	text-align:left;
+	cursor: pointer;
+	vertical-align:middle;
+}
+
+
+#tablebar {
+	font-size: 85%;
+	margin: 4px 4px 4px 0;
+	padding: 0px 4px;
+	background-color: #FFC;
+	border: 1px solid black;
+}
+
+.tablebar-top {
+	margin-top:50px;	
+}
+
+#tablebar form {
+	display: inline;
+}
+
+#tablebar label {
+	display: inline;
+	/*margin-right:1em;*/
+}
+
+#tablebar ul {
+	margin-left:0;
+	padding-left:0pt;
+	list-style: none;
+	margin-left:0;
+	margin-bottom:2px;
+}
+	
+#tablebar li {
+	display: inline;
+	font-size: 110%;
+	margin-right:1em;
+}
+
+#callout {
+	margin: 0 4px 0 2px;
+	padding: 4px 8px;
+	background-color: #FFC;
+	border: 1px solid black;	
+}
+
+#removex span {
+	cursor:pointer;
+	color:red;
+	font-size: 14px;
+	font-weight:bold; 
+}
+.trafficThermometers {
+	float: left;
+	/*width: 27em; */
+	/*height: 51.5ex;*/
+	overflow: hidden;
+	border: none;
+	margin: 0;
+}
+
+.trafficThermometers img {
+    width:100%;
+    max-width:300px;
+    /*max-width:100% !important;*/
+}
+
+.trafficThermometers figure {
+	margin-left: 0px;
+}
+
+.trafficThermometers figcaption {
+	margin: 2px 0 0 0;
+}
+
+.progress {
+	margin-bottom:2px;
+}
+
+.progressBar {
+	border: thin solid #15180a;
+	width:90%;
+	background: white;
+	/*Accessibility is #ccd8a5*/
+	/* right padding must match left+right padding on statusbarvalue or 100% will extend beyond box */
+	padding: 2px 4px 2px 0px;
+	margin: 2px;
+	text-align: center;
+}
+
+.progressBarValue {
+	background: #FF6347;
+	/*Accessibility is #025600*/
+	color: #000;
+	font-weight:bold;
+	/* If you change left or right padding adjust .statusbar padding */
+	padding: 1px 0px 1px 4px;
+    margin: 0 0 0 1px;
+}
+.progressBar a:link, .progressBar a:visited {
+	text-decoration: none;
+}
+
+.progressBar a:hover .progressBarValue {
+	background-color: #B51032;
+}
+
+
+/*Some of these are not in use*/
+	.progressBar ul {
+		list-style: none;
+	}
+	
+	.progressBar li {
+		display: inline;
+		font-size: 100%;
+	}
+	
+	.progressBarBad {
+		background: red;
+		/*Accessibility is #025600*/
+		color: #FFFFFF;
+		font-weight:bold;
+		/* If you change left or right padding adjust .statusbar padding */
+		padding: 1px 0px 1px 4px;
+		margin: 0 0 0 1px;
+	}
+	
+	.progressBarUnknown {
+		background: #CCC;
+		/*Accessibility is #025600*/
+		color: #FFFFFF;
+		font-weight:bold;
+		/* If you change left or right padding adjust .statusbar padding */
+		padding: 1px 0px 1px 4px;
+		margin: 0 0 0 1px;
+	}
+	
+	.progressBarGood {
+		background: green; /* green */
+		/*Accessibility is #025600*/
+		color: #FFFFFF;
+		font-weight:bold;
+		/* If you change left or right padding adjust .statusbar padding */
+		padding: 1px 0px 1px 4px;
+		margin: 0 0 0 1px;
+	}
+
+.hidden {
+	position:absolute;
+	left:-10000px;
+	top:auto;
+	width:1px;
+	height:1px;
+	overflow:hidden;
+}
+
+.cfdebug, .cfdebuglge {
+	margin-left:20em;	
+}
+table.cfdump_array th.array {
+	display: none;
+}
+#jstree a {
+	white-space: normal !important;
+	height: auto;
+	padding: 1px 2px;
+}
+
+mark {
+    background-color: yellow;
+    color: black;
+	font-weight:bold;
+}
+
+.zeroItemsYay {
+	color: gray;	 /* green */
+}
+
+
+/*
+ * Callouts from getbootstrap.com > docs.css
+ *
+ * Not quite alerts, but custom and helpful notes for folks reading the docs.
+ * Requires a base and modifier class.
+ */
+
+/* Common styles for all types */
+.bs-callout {
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.bs-callout h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+  margin-bottom: 0;
+}
+.bs-callout code {
+  border-radius: 3px;
+}
+
+/* Tighten up space between multiple callouts */
+.bs-callout + .bs-callout {
+  margin-top: -5px;
+}
+
+/* Variations */
+.bs-callout-danger {
+  border-left-color: #ce4844;
+}
+.bs-callout-danger h4 {
+  color: #ce4844;
+}
+.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+.bs-callout-warning h4 {
+  color: #aa6708;
+}
+.bs-callout-info {
+  border-left-color: #1b809e;
+}
+.bs-callout-info h4 {
+  color: #1b809e;
+}

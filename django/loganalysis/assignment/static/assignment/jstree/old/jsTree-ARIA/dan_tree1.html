@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+<title>Untitled Document</title>
+	<title>Accessible jQuery-ui Components Demo</title>
+	<script type="text/javascript" src="jquery-ui-min/jquery-1.7.2.min.js"></script>
+
+	<!-- jQuery-UI Core files (minified) -->
+	<link type="text/css" href="jquery-ui-min/jquery-ui.min.css" rel="stylesheet" />
+	<link type="text/css" href="jquery-ui-min/jquery.ui.menubar.css" rel="stylesheet" />
+	<script type="text/javascript" src="jquery-ui-min/jquery-ui.min.js"></script>
+
+	<!-- JSTree plugin files -->
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/lib/jquery.cookie.js"></script>
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/lib/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/jquery.jstree.js"></script>
+
+	<!-- Demo specific files  -->
+	<script type="text/javascript" src="demo.js"></script>
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+
+</head>
+
+<body>
+
+
+<div class="demo">
+	<h1>Accessible jQuery-ui Components Demonstration</h1>
+	<div class="ui-helper-hidden-accessible" aria-live="polite">
+		<h2>Instructions for Screen Reader Users:</h2>
+		<p>This page contains some interactive controls that you would normally only find in desktop applications.
+		Examples of such controls are tab lists, menu bars, sliders, and tree views. These controls are often operated using the arrow keys, which means your screen
+		reader must temporarily switch off virtual navigation mode in order to interact with them. Some screen readers will automatically switch between modes depending on the control's type,
+		while others require you to manually turn virtual mode off. The list below shows how to switch between modes on some popular screen readers:
+		</p>
+		 <dl>
+		 	<dt>JAWS</dt>
+		 	<dd>JAWS KEY + Z, use twice to make switch permanent</dd>
+		 	<dt>NVDA</dt>
+		 	<dd>NVDA KEY + SPACE</dd>
+		 	<dt>WindowEyes</dt>
+		 	<dd>Ctrl + Shift + A</dd>
+		 </dl>
+	</div>
+	<p class="ui-helper-hidden-accessible" id="demoTabsLabel">Widgets Tabs</p>
+    
+    
+
+<div id="tree">
+			<div class="ui-helper-clearfix">
+				<h2>About the Tree Widget</h2>
+			   <div class="leftColumn">
+					<h3>How to use the Tree widget:</h3>
+					<p>The tree takes up one tab stop in the tab order. It can be navigated with the following shortcuts:</p>
+					<ul>
+						<li>Up Arrow: Move focus the the previous tree item</li>
+						<li>Down Arrow: Move focus the the next tree item</li>
+						<li>Right Arrow: Expand current branch or move focus into its first tree item</li>
+						<li>Left Arrow: Move focus to parent branch or collapse current branch</li>
+					</ul>
+					<p>
+					The tree is marked up as an ARIA tree widget. To be announced properly by screen readers, the accordion must be used
+					with an ARIA compliant browser and a screen readerin (auto) forms mode or application mode.
+					</p>
+				</div>
+				<div class="rightColumn">
+					<h3>Accessibility Changes Made to the <a href="http://access.aol.com/aegis/before/jsTree/demo.html" target="_blank">Original Tree</a>:</h3>
+					<ul>
+						<li>Added ARIA tree markup so role, name &amp; state information is exposed</li>
+						<li>Added high contrast support</li>
+						<li>Added fixes related to programmatic focus</li>
+					</ul>
+				</div>
+			</div>
+            
+            
+			<h2>Demo: Tree View Containing Sample Documents</h2>
+			<h3 id="sampleTree1Lbl">My Documents</h3>
+			<div id="sampleTree">
+				<ul aria-labelledby="sampleTree1Lbl">
+					<li> <a href="#">Invoices</a>
+						<ul>
+							<li> <a href="#">January</a>
+									<ul>
+									<li> <a href="#">Invoice A</a> </li>
+									<li> <a href="#">Invoice B</a> </li>
+									<li> <a href="#">Invoice C</a> </li>
+								</ul>
+								</li>
+							<li> <a href="#">February</a>
+									<ul>
+									<li> <a href="#">Invoice D</a> </li>
+									<li> <a href="#">Invoice E</a> </li>
+									<li> <a href="#">Invoice F</a> </li>
+								</ul>
+								</li>
+							<li> <a href="#">March</a>
+									<ul>
+									<li> <a href="#">Invoice G</a> </li>
+									<li> <a href="#">Invoice H</a> </li>
+									<li> <a href="#">Invoice I</a> </li>
+								</ul>
+								</li>
+						</ul>
+						</li>
+					<li> <a href="#">Job Applications</a>
+						<ul>
+							<li> <a href="#">Unhandled</a>
+									<ul>
+									<li> <a href="#">Application A</a> </li>
+									<li> <a href="#">Application B</a> </li>
+									<li> <a href="#">Application C</a> </li>
+									<li> <a href="#">Application D</a> </li>
+									<li> <a href="#">Application E</a> </li>
+									<li> <a href="#">Application F</a> </li>
+									<li> <a href="#">Application G</a> </li>
+									<li> <a href="#">Application H</a> </li>
+								</ul>
+								</li>
+							<li> <a href="#">Accepted</a>
+									<ul>
+									<li> <a href="#">Peter Merchant</a> </li>
+									<li> <a href="#">Susan Jennings</a> </li>
+									<li> <a href="#">John Smith</a> </li>
+								</ul>
+								</li>
+							<li> <a href="#">Declined</a>
+									<ul>
+									<li> <a href="#">John Doe</a> </li>
+									<li> <a href="#">Jack Smith</a> </li>
+									<li> <a href="#">Hannah Boyd</a> </li>
+									<li> <a href="#">Reconsider?</a>
+											<ul>
+											<li> <a href="#">Sandra johnson</a> </li>
+											<li> <a href="#">Dan Smith</a> </li>
+											<li> <a href="#">Jason Bourne</a> </li>
+											<li> <a href="#">Jason Maple</a> </li>
+										</ul>
+										</li>
+								</ul>
+								</li>
+						</ul>
+						</li>
+					<li> <a href="#">Manuals</a>
+							<ul>
+							<li> <a href="#">Fax</a> </li>
+							<li> <a href="#">Copier</a> </li>
+							<li> <a href="#">Scanner</a> </li>
+							<li> <a href="#">Laptop</a> </li>
+						</ul>
+						</li>
+					<li> <a href="#">Welcome Letter</a> </li>
+					<li> <a href="#">Getting Started</a> </li>
+					<li> <a href="#">Trouble Shooting</a> </li>
+				</ul>
+			</div>
+		</div><!--end tree-->
+        
+       </div><!--end demo--> 
+
+
+
+
+
+<div class="ui-helper-clearfix">
+		<div class="leftColumn">
+			<h1>Source</h1>
+			<p>Last updated: <strong id="timeStamp"></strong></p>
+			<p><a href="http://hanshillen.github.com/jqtest/jquery-ui_accessibilityenhancements.zip">Download the latest version of this demo as a zip file</a></p>
+		</div>
+		<div class="rightColumn">
+			<h1>Acknowledgements</h1>
+			<p>Accessibility work on these widgets was implemented by <a href="http://www.paciellogroup.com/">The Paciello Group (TPG)</a> and funded by <a href="http://corp.aol.com/our-values/accessibility">AOL</a> and <a href="http://www.aegis-project.eu/">AEGIS</a>.</p>
+			<ul class="logoList">
+				<li><a href="http://www.aegis-project.eu/"><img src="images/AEGIS%20Logo.png" alt="Aegis" /></a></li>
+				<li><a href="http://corp.aol.com/our-values/accessibility"><img src="images/AOL%20Logo.png" alt="AOL" /></a></li>
+				<li><a href="http://www.paciellogroup.com/"><img class="tpgLogo" src="images/TPG%20Logo.gif" alt="TPG" /></a></li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+body {
+	font-family: Calibri, Arial, Helvetica, sans-serif;
+	font-size:12pt;
+    margin: 6px;
+    padding: 6px;
+}
+
+.rptNav {
+        list-style:none;
+}
+
+.rptNav li {
+        background-image: none;
+        margin-right: 0px;
+        padding: 4px;
+        display: inline;
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-right-color: #000;
+        line-height:1ex;
+}
+
+.pageNav {
+	border-bottom: thin solid #999;
+	padding-bottom: 6px;
+		
+}
+
+table {
+	max-width: 500px;
+	border: 1px solid #666;
+	border-collapse:collapse;
+	padding: 0;
+}
+
+th, td {
+	border: 1px solid #666;
+	border-collapse:collapse;
+	padding: 4px;
+}

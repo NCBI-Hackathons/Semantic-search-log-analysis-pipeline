@@ -1,0 +1,28 @@
+body{
+	margin: 0;
+}
+body{
+	font-family: "Trebuchet MS", sans-serif
+}
+
+.container{
+	padding: 32px;
+}
+nav{
+	background-color: rgb(250,250,250);
+}
+
+nav a{
+	margin-right: 1em;
+}
+
+h1{
+	color: gray
+}
+h3{
+	font-style: italic;
+}
+
+a.last-name{
+	color: darkgray;
+}

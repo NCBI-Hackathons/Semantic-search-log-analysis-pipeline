@@ -1,0 +1,34 @@
+
+<h1>Fuzzy match approval tool</h1>
+
+<table>
+    <tr>
+        <td>adjustedQueryCase (Visitor query)</td>
+        <td>preferredTerm (Software suggests)</td>
+        <td>One of these?</td>
+        <td>Based on token...</td>
+        <td>Times searched</td>
+    </tr>
+{% for match, match_form in matches %}
+    <tr>
+        <td>{{ match.adjustedQueryCase }}</td>
+        <td>{{ match.preferredTerm }}</td>
+        <td>
+            <form method="POST">
+            {% csrf_token %}
+            {{ match_form.query_id.as_hidden }}
+            <input type="submit" name="Ignore" value="Ignore">
+            <input type="submit" name="Accept" value="Accept">
+            <input type="submit" name="NLM Product/Service" value="NLM Product/Service">
+            <input type="submit" name="Human" value="Human">
+            <input type="submit" name="Journal Name" value="Journal Name">
+            <input type="submit" name="Add to RegEx" value="Add to RegEx">
+            <input type="submit" name="Foreign" value="Foreign">
+            <input type="submit" name="Combo" value="Combo">
+            </form>
+        </td>
+        <td>{{ match.FuzzyToken }}</td>
+        <td>{{ match.timesSearched }}</td>
+    </tr>
+{% endfor %}
+</table>

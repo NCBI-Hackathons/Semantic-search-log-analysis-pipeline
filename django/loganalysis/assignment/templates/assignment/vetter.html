@@ -1,0 +1,30 @@
+<h1>Fuzzy-match vetting tool</h1>
+
+  <p>Approve the category suggested by fuzzy matching, or assign something different, one <strong>Visitor query</strong> at a time. <a href="instructions-status.html">Instructions-Status</a>. </p>
+
+<table>
+    <tr>
+        <td>adjustedQueryCase (Visitor query)</td>
+        <td>preferredTerm (Software suggests)</td>
+        <td>One of these?</td>
+        <td>NewSemanticTypeName</td>
+        <td>Times searched</td>
+    </tr>
+{% for match, match_form in matches %}
+    <tr>
+        <td>{{ match.adjustedQueryCase }}</td>
+        <td>{{ match.preferredTerm }}</td>
+        <td>
+            <form method="POST">
+            {% csrf_token %}
+            {{ match_form.query_id.as_hidden }}
+            <input type="submit" name="Okay" value="Okay">
+            <input type="submit" name="Drop Row" value="Drop Row">
+            <input type="submit" name="Drop Preferred" value="Drop Preferred">
+            </form>
+        </td>
+        <td>{{ match.NewSemanticTypeName }}</td>
+        <td>{{ match.timesSearched }}</td>
+    </tr>
+{% endfor %}
+</table>

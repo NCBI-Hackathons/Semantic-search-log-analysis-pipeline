@@ -1,0 +1,71 @@
+Help:
+- jQuery get: http://api.jquery.com/jQuery.get/
+- eUtils Quick Start: http://www.ncbi.nlm.nih.gov/books/NBK25500/
+- In Depth: http://www.ncbi.nlm.nih.gov/books/NBK25499/
+- ESearch: http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
+- Base eUtils URL: http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=MeSH_TERM&rettype=count
+- CF 9 ArrayToList: http://help.adobe.com/en_US/ColdFusion/9.0/CFMLRef/WSc3ff6d0ea77859461172e0811cbec22c24-7f11.html
+
+http://stackoverflow.com/questions/17904704/jquery-ajax-solution-inside-each-loop
+http://stackoverflow.com/questions/14210831/multiple-asynchronous-ajax-calls-inside-each-loop-in-jquery
+
+Adding the data set back in...
+this page, invoking search:  CurrDataSetID="#CurrDataSetID#"
+cfc: WHERE dataset.DataSetID = #ARGUMENTS.CurrDataSetID#
+
+http://livedocs.adobe.com/coldfusion/8/htmldocs/help.html?content=functions_a-b_07.html
+
+http://help.adobe.com/en_US/ColdFusion/9.0/Developing/WSc3ff6d0ea77859461172e0811cbec22c24-7fb3.html
+http://help.adobe.com/en_US/ColdFusion/9.0/CFMLRef/WSc3ff6d0ea77859461172e0811cbec22c24-78e8.html
+
+<eSearchResult>
+	<Count>69678</Count>
+</eSearchResult>
+
+
+
+
+<!---<p>
+<cfoutput query="cfDescriptor">
+http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=#DescriptorName#+AND+#encoding#&rettype=count
+<br>
+<br>
+</cfoutput>
+</p>
+--->
+<!--- 
+
+
+//execute a single callback after the array has been loaded with ALL descriptors/counts for the present level.
+//	$.when(childList).then(function() {
+//	childList.forEach( printElement );
+---> 
+
+
+
+
+
+<!---<cfset temp = ArrayAppend(arrayOfChildren, "#DescriptorName# #theCnt#")>
+
+<!--- Show the resulting array as a list. ---> 
+<cfset myList = ArrayToList(resultArray, ",")> 
+
+
+
+<!--- Output the array as a list. ---> 
+<cfoutput> 
+
+    <p>#myList# 
+
+</cfoutput>--->
+
+
+  
+<!---  ' <a href="http://pubmed.gov/?term=' + descriptor  + '[mh]+AND+' + encodingEUtils + '">' + theCnt.firstChild.nodeValue + '</a>';--->
+
+
+    
+<!---Test what cf is returning from mesh_tree--->
+<!---<cfoutput query="treeTerm"><li id="#DescriptorName#" class="jstree-closed">#DescriptorName# (42)</li></cfoutput>--->
+
+

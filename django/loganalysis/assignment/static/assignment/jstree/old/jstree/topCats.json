@@ -1,0 +1,27 @@
+{[
+			'Analytical, Diagnostic and Therapeutic Techniques and Equipment',
+			'Anatomy',
+			'Anthropology, Education, Sociology and Social Phenomena',
+			'Chemicals and Drugs',
+			'Disciplines and Occupations',
+			'Diseases',
+			'Geographical Locations',
+			'Health Care',
+			'Humanities',
+			'Information Science',
+			'Organisms',
+			'Persons',
+			'Pharmacological Actions',
+			'Phenomena and Processes',
+			'Psychiatry and Psychology',
+			'Publication Type',
+			'Subheadings',
+			'Technology and Food and Beverages',
+            {
+                'id' : 'node_2',
+                'text' : 'Root node with options',
+                'state' : { 'opened' : false, 'selected' : false },
+                'children' : [ { 'text' : 'Child 1' }, 'Child 2']
+            }
+        ]
+}

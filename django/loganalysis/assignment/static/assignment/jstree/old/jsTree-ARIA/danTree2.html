@@ -1,0 +1,165 @@
+<!--Source: http://access.aol.com/aegis/#goto_tree-->
+
+
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>Browse records through the MeSH tree</title>
+	<script type="text/javascript" src="jquery-ui-min/jquery-1.7.2.min.js"></script>
+
+	<!-- jQuery-UI Core files (minified) -->
+	<link type="text/css" href="jquery-ui-min/jquery-ui.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="jquery-ui-min/jquery-ui.min.js"></script>
+
+	<!-- JSTree plugin files -->
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/lib/jquery.cookie.js"></script>
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/lib/jquery.hotkeys.js"></script>
+	<script type="text/javascript" src="jstree-a11y/jsTree.v.1.0rc2/jquery.jstree.js"></script>
+
+	<!-- Demo specific files  -->
+	<script type="text/javascript" src="demo.js"></script>
+	<link rel="stylesheet" type="text/css" href="demo.css" />
+</head>
+<body>
+
+<h1>Browse records by MeSH Tree category</h1>
+
+
+<p>Counts and pubmed.gov links to records in the <strong>Research Guidelines specific topic query retrieved 1/4/2014</strong>. Counts at pubmed.gov will be more accurate than the ones you see here. </p>
+<p>The top-level labels cannot be retrieved from pubmed.gov, because these terms do not appear in MeSH. Also, while terms are presented in tree structure, many terms appear in other parts of the tree. </p>
+
+<div id="demoTabs">
+    <ul aria-labelledby="demoTabsLabel" style="display:none;">
+        <li><a href="#slider">Slider</a></li>
+        <li><a href="#progressbar">Progress bar</a></li>
+        <li><a href="#menubar">Menubar</a></li>
+        <li><a href="#button">Buttons</a></li>
+        <li><a href="#dialog">Dialog</a></li>
+        <li><a href="#checkbox">Checkbox</a></li>
+        <li><a href="#accordion">Accordion</a></li>
+        <li><a href="#tree">Tree</a></li>
+    </ul>
+
+<div id="slider"></div><div id="progressbar"></div><div id="menubar"></div><div id="button"></div><div id="dialog"></div><div id="checkbox"></div><div id="accordion"></div>
+
+<div id="tree">
+
+<div id="sampleTree">
+
+    <ul aria-labelledby="sampleTree1Lbl">
+        <li> <a href="#" title="terms below A-Anatomy">Anatomy</a>-<a href="http://www.ncbi.nlm.nih.gov/pubmed?term=Anatomy[mh]+AND+reportresearch[sb]" title="Records for Anatomy" target="_blank">8</a>
+            <ul>
+                <li> <a href="#">January</a>
+                        <ul>
+                        <li> <a href="#">Invoice A</a></li>
+                        <li> <a href="#">Invoice B</a> </li>
+                        <li> <a href="#">Invoice C</a> </li>
+                    </ul>
+              </li>
+                <li> <a href="#">February</a>
+                        <ul>
+                        <li> <a href="#">Invoice D</a> </li>
+                        <li> <a href="#">Invoice E</a> </li>
+                        <li> <a href="#">Invoice F</a> </li>
+                    </ul>
+              </li>
+                <li> <a href="#">March</a>
+                        <ul>
+                        <li> <a href="#">Invoice G</a> </li>
+                        <li> <a href="#">Invoice H</a> </li>
+                        <li> <a href="#">Invoice I</a> </li>
+                    </ul>
+              </li>
+          </ul>
+      </li>
+      
+        <li> <a href="#" title="B">Organisms</a>
+            <ul>
+                <li> <a href="#">Unhandled</a>
+                        <ul>
+                        <li> <a href="#">Application A</a> </li>
+                        <li> <a href="#">Application B</a> </li>
+                        <li> <a href="#">Application C</a> </li>
+                        <li> <a href="#">Application D</a> </li>
+                        <li> <a href="#">Application E</a> </li>
+                        <li> <a href="#">Application F</a> </li>
+                        <li> <a href="#">Application G</a> </li>
+                        <li> <a href="#">Application H</a> </li>
+                    </ul>
+              </li>
+                <li> <a href="#">Accepted</a>
+                        <ul>
+                        <li> <a href="#">Peter Merchant</a> </li>
+                        <li> <a href="#">Susan Jennings</a> </li>
+                        <li> <a href="#">John Smith</a> </li>
+                    </ul>
+              </li>
+                <li> <a href="#">Declined</a>
+                        <ul>
+                        <li> <a href="#">John Doe</a> </li>
+                        <li> <a href="#">Jack Smith</a> </li>
+                        <li> <a href="#">Hannah Boyd</a> </li>
+                        <li> <a href="#">Reconsider?</a>
+                                <ul>
+                                <li> <a href="#">Sandra johnson</a> </li>
+                                <li> <a href="#">Dan Smith</a> </li>
+                                <li> <a href="#">Jason Bourne</a> </li>
+                                <li> <a href="#">Jason Maple</a> </li>
+                            </ul>
+                          </li>
+                    </ul>
+              </li>
+            </ul>
+      </li>
+      
+        <li> <a href="#" title="C">Diseases</a>
+                <ul>
+                <li> <a href="#">Fax</a> </li>
+                <li> <a href="#">Copier</a> </li>
+                <li> <a href="#">Scanner</a> </li>
+                <li> <a href="#">Laptop</a> </li>
+            </ul>
+      </li>
+        <li><a href="#" title="D">Chemicals and Drugs</a></li>
+        <li><a href="#" title="E">Analytical, Diagnostic and Therapeutic Techniques and Equipment</a> </li>
+        <li><a href="#" title="F">Psychiatry and Psychology</a></li>
+        <li><a href="#" title="G">Phenomena and Processes [G]</a></li>
+        <li><a href="#" title="H">Disciplines and Occupations [H]</a></li>
+        <li><a href="#" title="I">Anthropology, Education, Sociology and Social Phenomena [I]</a></li>
+        <li><a href="#" title="J">Technology, Industry, Agriculture [J]</a></li>
+        <li><a href="#" title="K">Humanities [K]</a></li>
+        <li><a href="#" title="L">Information Science [L] (4099)Anatomy [A]</a></li>
+        <li><a href="#" title="M">Named Groups [M]</a></li>
+        <li><a href="#" title="N">Health Care [N]</a></li>
+        <li><a href="#" title="V">Publication Characteristics [V]</a></li>
+        <li><a href="#" title="Z">Geographicals [Z]</a></li>
+    </ul>
+</div>
+</div><!--end tree-->
+
+        
+        
+</div><!--end demoTabs-->
+ 
+<!--
+Anatomy [A] (98) 
+Organisms [B] (5256)
+Diseases [C] (2192)
+Chemicals and Drugs [D] (627)
+Analytical, Diagnostic and Therapeutic Techniques and Equipment [E] (3902)
+Psychiatry and Psychology [F] (4404)
+Phenomena and Processes [G] (1130)
+Disciplines and Occupations [H] (1466)
+Anthropology, Education, Sociology and Social Phenomena [I] (4455)
+Technology, Industry, Agriculture [J] (614)
+Humanities [K] (535)
+Information Science [L] (4099)Anatomy [A] (98)
+Named Groups [M] (3840)
+Health Care [N] (5274)
+Publication Characteristics [V] (0)
+Geographicals [Z] (2631) 
+-->
+	
+</body>
+</html>

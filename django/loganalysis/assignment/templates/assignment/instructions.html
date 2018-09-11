@@ -1,0 +1,30 @@
+<h2>Instructions</h2>
+
+  <ol>
+    <li>Click <strong>Select</strong> when <strong>Visitor query</strong> matches the <strong>Suggested</strong> term.</li>
+    <li>Okay for narrower <strong>Visitor query</strong> to be assigned to broader <strong>Suggested</strong> term - BUT NOT THE OTHER WAY AROUND. Yes, the query &quot;raw vegan diet&quot; can be assigned to &quot;Diet.&quot; Don't match these: person searched for heat; item suggested is heat stroke. Nope.</li>
+    <li>When <strong>Visitor query</strong> is actually 1 of the 4 categories in <strong>One of these?</strong>, click that link</li>
+    <li>For Diseases/Conditions, the following are not significant here:<ul>
+      <li>Matter of degree - severe pneumonia is equivalent to <strong>Suggested</strong> term pneumonia.</li>
+      <li>Symptoms of, Diagnosing, Treatment for - okay to ignore</li>
+      </ul></li>
+    <!-- <li></li> -->
+    <li>If it helps, you can click <strong>Remove</strong> when the correct assignment is not available, to remove the row. We will change the options later.</li>
+  </ol>
+
+
+<p>{{ status|length }} preferred terms have been assigned in this dataset</p>
+
+<table>
+    <tr>
+        <td>Assignment</td>
+        <td>Assignments</td>
+    </tr>
+{% for row in status %}
+    <tr>
+        <td>{{ row.NewSemanticTypeName }}</td>
+        <td>{{ row.num_type_name }}</td>
+    </tr>
+{% endfor %}
+</table>
+

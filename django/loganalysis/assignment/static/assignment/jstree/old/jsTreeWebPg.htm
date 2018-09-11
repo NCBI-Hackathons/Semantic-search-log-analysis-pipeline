@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://www.jstree.com/docs/json -->
+<html class="no-js"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>jsTree</title>
+	<meta name="viewport" content="width=device-width">
+	<!--[if lt IE 9]><script src="http://static.jstree.com/3.0.0-beta5/assets/html5.js"></script><![endif]-->
+	
+	<meta name="robots" content="index,follow">
+	<link rel="stylesheet" href="http://static.jstree.com/3.0.0-beta5/assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://static.jstree.com/3.0.0-beta5/assets/dist/themes/default/style.min.css">
+	<link rel="stylesheet" href="http://static.jstree.com/3.0.0-beta5/assets/docs.css">
+	<!--[if lt IE 9]><script src="http://static.jstree.com/3.0.0-beta5/assets/respond.js"></script><![endif]-->
+	
+	<link rel="icon" href="http://static.jstree.com/3.0.0-beta5/assets/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon-precomposed" href="http://static.jstree.com/3.0.0-beta5/assets/apple-touch-icon-precomposed.png">
+	<script>window.$q=[];window.$=window.jQuery=function(a){window.$q.push(a);};</script>
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.jstree.com/feed.xml"><script>WR = "/";</script><link rel="search" type="application/opensearchdescription+xml" href="http://www.jstree.com/opensearch.xml" title="Search jstree API"></head>
+<body style="">
+	<header id="head">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-12">
+					<h1 id="logo"><a href="http://jstree.com/">jsTree - jQuery tree plugin<span>3.0.0-beta5</span></a></h1>
+				</div>
+				<div class="col-md-6 col-sm-8">
+					<nav>
+						<ul class="nav nav-pills" id="menu"><li class="active"><a href="http://www.jstree.com/"><i class="glyphicon glyphicon-home"></i> Home</a></li><li><a href="http://www.jstree.com/demo"><i class="glyphicon glyphicon-flash"></i> Demo</a></li><li><a href="http://www.jstree.com/api"><i class="glyphicon glyphicon-cog"></i> API</a></li><li><a href="http://www.jstree.com/plugins"><i class="glyphicon glyphicon-link"></i> Plugins</a></li></ul>
+					</nav>
+				</div>
+				<div class="col-md-3 col-sm-4">
+					<form role="search">
+						<input type="text" id="srch" class="form-control" placeholder="API search">
+					</form>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container" id="content">
+		<div class="row page" id="docs" style="display: block; min-height: 3263px;">
+			<div class="col-md-12" style="">
+				<h3><i class="glyphicon glyphicon-leaf"></i> What is jsTree?</h3>
+				<div class="row">
+					<div class="col-md-8">
+						<p>jsTree is <strong>jquery plugin</strong>, that provides <strong>interactive trees</strong>. It is absolutely <strong>free</strong>, <a href="https://github.com/vakata/jstree/">open source</a> and distributed under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>. jsTree is easily extendable, themable and configurable, it supports <strong>HTML &amp; JSON data sources and AJAX loading</strong>.</p>
+						<p>jsTree functions properly in either box-model (content-box or border-box), can be loaded as an AMD module, and has a built in mobile theme for responsive design, that can easily be customized. It uses jQuery's event system, so binding callbacks on various events in the tree is familiar and easy.</p>
+						<p>Just a few of the features worth noting:</p>
+						<ul class="features list-unstyled list-inline">
+							<li><i class="glyphicon glyphicon-ok"></i> drag &amp; drop support</li>
+							<li><i class="glyphicon glyphicon-ok"></i> keyboard navigation</li>
+							<li><i class="glyphicon glyphicon-ok"></i> inline edit, create and delete</li>
+							<li><i class="glyphicon glyphicon-ok"></i> tri-state checkboxes</li>
+							<li><i class="glyphicon glyphicon-ok"></i> fuzzy searching</li>
+							<li><i class="glyphicon glyphicon-ok"></i> customizable node types</li>
+						</ul>
+						<p id="main-buttons">
+							<img src="./jsTreeWebPg_files/browsers.png" style="max-width:100%; max-height:36px;" alt=""><br><small>All modern browsers are supported, as well as IE8</small><br><br>
+							<a href="https://github.com/vakata/jstree/zipball/3.0.0-beta5" class="btn btn-success"><i class="glyphicon glyphicon-download"></i>&nbsp;&nbsp;Download</a>
+							<a href="https://groups.google.com/forum/#!forum/jstree" class="btn btn-warning"><i class="glyphicon glyphicon-comment"></i>&nbsp;&nbsp;Discuss</a>
+							<a href="https://github.com/vakata/jstree/issues?state=open" class="btn btn-danger"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;&nbsp;Report bugs</a>
+							<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@vakata.com&currency_code=USD&amount=&return=http://jstree.com/donation&item_name=Buy+me+a+coffee+for+jsTree" class="btn btn-primary"><i class="glyphicon glyphicon-thumbs-up"></i>&nbsp;&nbsp;&nbsp;Donate</a>
+						</p>
+					</div>
+					<div class="col-md-4">
+						<div id="jstree1" class="demo jstree jstree-1 jstree-default jstree-default-responsive" role="tree"><ul class="jstree-container-ul"><li role="treeitem" id="j1_1" class="jstree-node  jstree-open"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root node 1
+									</a><ul role="group" class="jstree-children"><li role="treeitem" data-jstree="{ &quot;selected&quot; : true }" id="j1_2" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor  jstree-clicked" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i><em>initially</em> <strong>selected</strong></a></li><li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;http://jstree.com/tree-icon.png&quot; }" id="j1_3" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon jstree-themeicon-custom" style="background-image: url(http://jstree.com/tree-icon.png); background-size: auto; background-position: 50% 50%;"></i>custom icon URL</a></li><li role="treeitem" data-jstree="{ &quot;opened&quot; : true }" id="j1_4" class="jstree-node  jstree-open"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>initially open
+											</a><ul role="group" class="jstree-children"><li role="treeitem" id="j1_5" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Another node</a></li></ul></li><li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;glyphicon glyphicon-leaf&quot; }" id="j1_6" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon glyphicon glyphicon-leaf jstree-themeicon-custom"></i>Custom icon class (bootstrap)</a></li></ul></li><li role="treeitem" id="j1_7" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/"><i class="jstree-icon jstree-themeicon"></i>Root node 2</a></li></ul></div>
+						<div id="jstree2" class="demo jstree jstree-2 jstree-default jstree-default-responsive" style="margin-top:2em;" role="tree"><ul class="jstree-container-ul jstree-no-dots jstree-wholerow-ul"><li role="treeitem" id="j2_8" class="jstree-node  jstree-open"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox jstree-undetermined"></i><i class="jstree-icon jstree-themeicon"></i>Same but with checkboxes</a><ul role="group" class="jstree-children"><li role="treeitem" id="j2_9" class="jstree-node  jstree-leaf"><div unselectable="on" class="jstree-wholerow jstree-wholerow-clicked">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor  jstree-clicked" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon"></i>initially selected</a></li><li role="treeitem" id="j2_10" class="jstree-node  jstree-leaf"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon jstree-themeicon-custom" style="background-image: url(http://jstree.com/tree-icon.png); background-size: auto; background-position: 50% 50%;"></i>custom icon URL</a></li><li role="treeitem" id="j2_11" class="jstree-node  jstree-open"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon"></i>initially open</a><ul role="group" class="jstree-children"><li role="treeitem" id="j2_12" class="jstree-node  jstree-leaf jstree-last"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon"></i>Another node</a></li></ul></li><li role="treeitem" id="j2_13" class="jstree-node  jstree-leaf jstree-last"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon glyphicon glyphicon-leaf jstree-themeicon-custom"></i>custom icon class</a></li></ul></li><li role="treeitem" id="j2_14" class="jstree-node  jstree-leaf jstree-last"><div unselectable="on" class="jstree-wholerow">&nbsp;</div><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon"></i>And wholerow selection</a></li></ul></div>
+						<script>
+						$(function () {
+							$('#jstree1').jstree();
+							$('#jstree2').jstree({'plugins':["wholerow","checkbox"], 'core' : {
+								'data' : [
+									{
+										"text" : "Same but with checkboxes",
+										"children" : [
+											{ "text" : "initially selected", "state" : { "selected" : true } },
+											{ "text" : "custom icon URL", "icon" : "http://jstree.com/tree-icon.png" },
+											{ "text" : "initially open", "state" : { "opened" : true }, "children" : [ "Another node" ] },
+											{ "text" : "custom icon class", "icon" : "glyphicon glyphicon-leaf" }
+										]
+									},
+									"And wholerow selection"
+								]
+							}});
+						});
+						</script>
+					</div>
+				</div>
+
+				<ul class="nav nav-tabs">
+					<li><a href="http://www.jstree.com/" class="nava">Overview</a></li>
+					<li><a href="http://www.jstree.com/docs/config" class="nava">Configuration</a></li>
+					<li><a href="http://www.jstree.com/docs/html" class="nava">HTML data</a></li>
+					<li class="active"><a href="./jsTreeWebPg_files/jsTreeWebPg.htm" class="nava">JSON data</a></li>
+					<li><a href="http://www.jstree.com/docs/events" class="nava">Events</a></li>
+					<li><a href="http://www.jstree.com/docs/interaction" class="nava">Interaction</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="json" class="tab-content-item">
+
+				<div class="row">
+					<div class="col-md-12">
+						<h3><i class="glyphicon glyphicon-leaf"></i> Populating the tree using JSON</h3>
+					</div>
+				</div>
+				<h4>The format</h4>
+				<div class="row">
+					<div class="col-md-6">
+						<p>jsTree needs a specific format to work with JSON. In the standard syntax no fields are required - pass only what you need. Keep in mind you will be able to access any additional properties you specify - jsTree won't touch them and you will be able to use them later on.</p>
+						<p>To change the icon of the node use the <code>icon</code> property. Specifying a string containing a <code>/</code> will display that image as the node icon. Using any other string will apply that class to the <code>&lt;i&gt;</code> element that is used to represent the icon. You can use boolean <code>false</code> to make jsTree render the node with no icon.</p>
+						<p>You can set the state on a node using the <code>state</code> property. Use any combination of the following: <code>opened</code>, <code>selected</code>, <code>disabled</code>.</p>
+						<p>Both <code>li_attr</code> and <code>a_attr</code> are passed directly to jQuery's attr function.</p>
+						<p>When using AJAX set <code>children</code> to boolean <code>true</code> and jsTree will render the node as closed and make an additional request for that node when the user opens it.</p>
+						<p>Any nested children should either be objects following the same format, or plain strings (in which case the string is used for the node's text and everything else is autogenerated).</p>
+					</div>
+					<div class="col-md-6">
+						<pre><code><span class="comment">// Expected format of the node (there are no required fields)</span>
+{
+  id          : "string" <span class="comment">// will be autogenerated if omitted</span>
+  text        : "string" <span class="comment">// node text</span>
+  icon        : "string" <span class="comment">// string for custom</span>
+  state       : {
+    opened    : boolean  <span class="comment">// is the node open</span>
+    disabled  : boolean  <span class="comment">// is the node disabled</span>
+    selected  : boolean  <span class="comment">// is the node selected</span>
+  },
+  children    : []  <span class="comment">// array of strings or objects</span>
+  li_attr     : {}  <span class="comment">// attributes for the generated LI node</span>
+  a_attr      : {}  <span class="comment">// attributes for the generated A node</span>
+}</code></pre>
+					</div>
+				</div>
+				<h4>Alternative JSON format</h4>
+				<div class="row">
+					<div class="col-md-6">
+						<p>If you do not want to use the nested <code>children</code> approach, you can use the alternative syntax where each node object has two required fields: <code>id</code> &amp; <code>parent</code> and no <code>children</code> property (everything else remains the same).</p>
+						<p>jsTree will automatically build the hierarchy. To indicate a node should be a root node set its <code>parent</code> property to <code>"#"</code>.</p>
+						<p>This should be used mainly when you render the whole tree at once and is useful when data is stored in a database using adjacency.</p>
+					</div>
+					<div class="col-md-6">
+						<pre><code><span class="comment">// Alternative format of the node (id &amp; parent are required)</span>
+{
+  <strong>id          : "string"</strong> <span class="comment">// required</span>
+  <strong>parent      : "string"</strong> <span class="comment">// required</span>
+  text        : "string" <span class="comment">// node text</span>
+  icon        : "string" <span class="comment">// string for custom</span>
+  state       : {
+    opened    : boolean  <span class="comment">// is the node open</span>
+    disabled  : boolean  <span class="comment">// is the node disabled</span>
+    selected  : boolean  <span class="comment">// is the node selected</span>
+  },
+  li_attr     : {}  <span class="comment">// attributes for the generated LI node</span>
+  a_attr      : {}  <span class="comment">// attributes for the generated A node</span>
+}</code></pre>
+					</div>
+				</div>
+				<h4>Using JSON</h4>
+				<div class="row">
+					<div class="col-md-4">
+						<p>To populate the tree with a JSON object you need to use the <a href="http://www.jstree.com/api/#/?f=$.jstree.defaults.core.data"><code>$.jstree.defaults.core.data</code></a> config option.</p>
+						<p>The expected format is an array of nodes, where each node should be an object as described above or a simple string (in which case the string is used for the node's text property ane everything else is autogenerated). Any nested nodes are supplied in the same manner in the <code>children</code> property of their parent.</p>
+					</div>
+					<div class="col-md-4">
+						<pre><code>$('#using_json').jstree({ 'core' : {
+    'data' : [
+       'Simple root node',
+       {
+         'text' : 'Root node 2',
+         'state' : {
+           'opened' : true,
+           'selected' : true
+         },
+         'children' : [
+           { 'text' : 'Child 1' },
+           'Child 2'
+         ]
+      }
+    ]
+} });</code></pre>
+					</div>
+					<div class="col-md-4">
+						<div id="using_json" class="demo jstree jstree-3 jstree-default jstree-default-responsive" role="tree"><ul class="jstree-container-ul"><li role="treeitem" id="j3_15" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Simple root node</a></li><li role="treeitem" id="j3_16" class="jstree-node  jstree-open jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor  jstree-clicked" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root node 2</a><ul role="group" class="jstree-children"><li role="treeitem" id="j3_17" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Child 1</a></li><li role="treeitem" id="j3_18" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Child 2</a></li></ul></li></ul></div>
+						<script>
+						$(function () {
+							$('#using_json').jstree({ 'core' : {
+							    'data' : [
+							       'Simple root node',
+							       {
+							         'text' : 'Root node 2',
+							         'state' : {
+							           'opened' : true, 'selected' : true
+							         },
+							         'children' : [
+							           { 'text' : 'Child 1' },
+							           'Child 2'
+							         ]
+							      }
+							    ]
+							} });
+						});</script>
+					</div>
+				</div>
+				<h4>Using the alternative JSON format</h4>
+				<div class="row">
+					<div class="col-md-8">
+						<pre><code>$('#using_json_2').jstree({ 'core' : {
+    'data' : [
+       { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
+       { "id" : "ajson2", "parent" : "#", "text" : "Root node 2" },
+       { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
+       { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" },
+    ]
+} });</code></pre>
+					</div>
+					<div class="col-md-4">
+						<div id="using_json_2" class="demo jstree jstree-4 jstree-default jstree-default-responsive" role="tree"><ul class="jstree-container-ul"><li role="treeitem" id="ajson1" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Simple root node</a></li><li role="treeitem" id="ajson2" class="jstree-node  jstree-open jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root node 2</a><ul role="group" class="jstree-children"><li role="treeitem" id="ajson3" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Child 1</a></li><li role="treeitem" id="ajson4" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Child 2</a></li></ul></li></ul></div>
+						<script>
+						$(function () {
+							$('#using_json_2').jstree({ 'core' : {
+							    'data' : [
+							       { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
+							       { "id" : "ajson2", "parent" : "#", "text" : "Root node 2", "state" : { "opened" : true } },
+							       { "id" : "ajson3", "parent" : "ajson2", "text" : "Child 1" },
+							       { "id" : "ajson4", "parent" : "ajson2", "text" : "Child 2" }
+							    ]
+							} });
+						});</script>
+					</div>
+				</div>
+				<h4>Using AJAX</h4>
+				<div class="row">
+					<div class="col-md-4">
+						<p>You can also use AJAX to populate the tree with JSON your server returns. The format remains the same as the above, the only difference is that the JSON is not inside the config object, but returned from the server.</p>
+						<p>To take advantage of this option you need to use the <a href="http://www.jstree.com/api/#/?f=$.jstree.defaults.core.data"><code>$.jstree.defaults.core.data</code></a> config option.</p>
+						<p>Just use a standard jQuery-like AJAX config and jstree will automatically make an AJAX request populate the tree with the response.</p>
+						<p>In addition to the standard jQuery ajax options here you can supply functions for <code>data</code> and <code>url</code>, the functions will be run in the current instance's scope and a param will be passed indicating which node is being loaded, the return value of those functions will be used as URL and data respectively.</p>
+						<p>If you do not return correct json headers from the server, at least set the <code>dataType</code> jQuery AJAX option to <code>"json"</code>.</p>
+					</div>
+					<div class="col-md-4">
+						<pre><code>
+$('#tree').jstree({
+'core' : {
+  'data' : {
+    'url' : function (node) {
+      return node.id === '#' ? 
+        'ajax_roots.json' : 
+        'ajax_children.json';
+    },
+    'data' : function (node) {
+      return { 'id' : node.id };
+    }
+  }
+});
+						</code></pre>
+					</div>
+					<div class="col-md-4">
+						<div id="using_json_3" class="demo jstree jstree-5 jstree-default jstree-default-responsive" role="tree"><ul class="jstree-container-ul"><li role="treeitem" id="j5_21" class="jstree-node jstree-closed"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root 1</a></li><li role="treeitem" id="j5_22" class="jstree-node  jstree-closed jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root 2</a></li></ul></div>
+						<script>
+						$(function () {
+							$('#using_json_3').jstree({
+								'core' : {
+									'data' : {
+									    'url' : function (node) {
+									      return node.id === '#' ? '/static/3.0.0-beta5/assets/ajax_roots.json' : '/static/3.0.0-beta5/assets/ajax_children.json';
+									    },
+									    'data' : function (node) {
+									      return { 'id' : node.id };
+									    }
+									}
+								}
+							});
+						});
+						</script>
+					</div>
+				</div>
+				<h4>Using a function</h4>
+				<div class="row">
+					<div class="col-md-4">
+						<p>You can supply a function too. That function will receive two arguments - the node being loaded and a callback function to call with the children for that node once you are ready.</p>
+					</div>
+					<div class="col-md-4">
+						<pre><code>
+$('#tree').jstree({
+    'core' : {
+        'data' : function (obj, cb) {
+            cb.call(this,
+              ['Root 1', 'Root 2']);
+        }
+    }});
+						</code></pre>
+					</div>
+					<div class="col-md-4">
+						<div id="using_json_4" class="demo jstree jstree-6 jstree-default jstree-default-responsive" role="tree"><ul class="jstree-container-ul"><li role="treeitem" id="j6_19" class="jstree-node  jstree-leaf"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root 1</a></li><li role="treeitem" id="j6_20" class="jstree-node  jstree-leaf jstree-last"><i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com/docs/json#"><i class="jstree-icon jstree-themeicon"></i>Root 2</a></li></ul></div>
+						<script>
+						$(function () {
+							$('#using_json_4').jstree({
+							    'core' : {
+							        'data' : function (obj, callback) {
+							            callback.call(this, ['Root 1', 'Root 2']);
+							        }
+							    }});
+						});
+						</script>
+					</div>
+				</div>
+
+				</div></div>
+
+			</div>
+		<p style="text-align:center; margin-top:2em;"><a href="http://old.jstree.com/">click here for the old site (v.1)</a></p><div style="margin-top:4em; text-align:center; border-bottom:40px solid white;" class="hidden-sm hidden-xs"><script type="text/javascript">google_ad_client = "pub-3390774673776502";/* 728x90, created 9/28/09 */google_ad_slot = "0034777413";google_ad_width = 728;google_ad_height = 90;</script><script type="text/javascript" src="./jsTreeWebPg_files/show_ads.js"></script><ins style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent"><iframe width="728" height="90" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;"></iframe></ins></ins></div></div>
+	</div>
+	<a class="hidden-xs hidden-sm" href="https://github.com/vakata/jstree"><img style="position: absolute; top: 0; left: 0; border: 0;" src="./jsTreeWebPg_files/forkme_left_green_007200.png" alt="Fork me on GitHub"></a>
+	<script src="./jsTreeWebPg_files/jquery-1.10.2.min.js"></script>
+	<script src="./jsTreeWebPg_files/jquery.address-1.6.js"></script>
+	<script src="./jsTreeWebPg_files/vakata.js"></script>
+	<script src="./jsTreeWebPg_files/jstree.min.js"></script>
+	<script src="./jsTreeWebPg_files/site.js"></script>
+	<script>$.each($q,function(i,f){$(f)});$q=null;</script>
+
+<ul class="vakata-context"></ul><div id="jstree-marker" style="display: none;">&nbsp;</div></body></html>

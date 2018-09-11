@@ -1,0 +1,16 @@
+{
+	"data": [
+		{
+			'id' : 'node_1',
+			'text' : 'Root node with options',
+			'state' : { 'opened' : true, 'selected' : true },
+			'children' : [ { 'text' : 'Child 1' }, 'Child 2']
+        }
+		{
+			'id' : 'node_2',
+			'text' : 'Root node with options 2',
+			'state' : { 'opened' : true, 'selected' : true },
+			'children' : [ { 'text' : 'Child 1' }, 'Child 2']
+        }
+    ]
+}
