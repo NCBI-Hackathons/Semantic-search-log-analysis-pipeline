@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!-- Leave here or IE will break the nav bar -->
+<!--
+Name:        InternalSearch/semanticGroup.html
+Author:      Dan Wendling (dan.wendling@nih.gov)
+Description: Find and fix communication gaps, home page
+Created:     7/7/2018
+Modified:    7/7/2018
+
+Orig source:
+Source: https://sarahleejane.github.io/learning/python/2015/08/09/simple-tables-in-webapps-using-flask-and-pandas-with-python.html
+ -->
+
+
+
+<!-- ---------------------------------------------------------------------------- -->
+<!-- CODE OF PAGE --------------------------------------------------------------- -->
+<!-- ---------------------------------------------------------------------------- -->
+
+<html lang="en">
+
+  <head>
+    {% include 'assignment/head.html' %}
+    <meta name="description" content="Terminology usage">
+    <title>Selection - Fuzzy matches</title>
+
+
+  <style>
+    li          { line-height: 1; }
+    tr:hover td { background: #ffff99; }
+    td          { word-wrap: break-word; min-width:24%; max-width: 25%; }
+    table       { margin-top:0; }
+    p           { margin-top:0;margin-bottom:2; }
+    h1          { margin-top:0px;margin-bottom: 0}
+    .usa-section { padding-top: 1.5rem; }
+    form [type=submit] { height: 2rem;
+                         margin: 0.1rem;
+                         padding: 0.3rem;
+                         display: inline;
+                         font-size: 1.4rem;}
+  </style>
+
+  </head>
+
+
+<body class="layout-demo">
+
+<a class="usa-skipnav" href="https://standards.usa.gov/page-templates/docs/#main-content">Skip to main content</a>
+
+<header class="usa-header usa-header-basic" role="banner"> 
+    {% include 'assignment/header.html' %}
+</header>
+
+<div class="usa-overlay"></div>
+
+<main class="usa-grid usa-section usa-content usa-layout-docs" id="main-content">
+
+
+<!-- --------------------------------------------------------------------- -->
+<!--  CONTENT AREA ------------------------------------------------------ -->
+<!-- --------------------------------------------------------------------- -->
+
+{% block contents %}
+
+{% endblock contents %}
+
+<footer class="usa-footer usa-footer-medium" role="contentinfo">
+    {% include 'assignment/footer.html' %}
+</footer>
+
+
+</main>
+
+
+</body>
+</html>
