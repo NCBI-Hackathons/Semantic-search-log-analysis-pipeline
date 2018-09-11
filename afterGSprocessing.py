@@ -2,12 +2,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 from xlrd import *
+import xlrd
 from datetime import datetime
 
 ###########
 ## currently afterGS is hardcoded so please change that
 
-aftergs="C:\Users\Austin\Downloads\logAfterGoldStandard.xlsx"
+aftergs="logAfterGoldStandard.xlsx"
 wb = open_workbook(aftergs)
 
 umlsgrps = ["Activities and Behaviors", "Anatomy", "Chemicals and Drugs", "Concepts and Ideas", "Devices", "Disorders", "Genes and Molecular Sequences", "Geographic Areas", "Living Beings", "Objects", "Occupations", "Organizations", "Phenomena", "Physiology", "Procedures"]
@@ -41,7 +42,7 @@ for s in wb.sheets():
     a1 = s.cell(1,5).value
     print(a1)
     a1_datetime = datetime(*xlrd.xldate_as_tuple(a1, wb.datemode))
-    print 'datetime: %s' % a1_datetime
+    print('datetime: %s' % a1_datetime)
 #    print(type(a1_datetime))
 #    #dt_object = datetime.strptime(a1_datetime, "%Y-%b-%d")
 #    
@@ -109,6 +110,6 @@ for grp in umlsgrps:
 
 #plt.set_xlabel("Dates")
 #plt.set_ylabel("Count")
-
+plt.title('Searches by semantic group')
 plt.legend()
 plt.show()
