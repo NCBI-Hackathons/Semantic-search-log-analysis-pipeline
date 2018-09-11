@@ -190,7 +190,7 @@ listOfUniqueUnassignedAfterGS = listOfUniqueUnassignedAfterGS.loc[(listOfUniqueU
 
 
 # listToCheck1 = unassignedAfterGS.iloc[0:20]
-listToCheck1 = listOfUniqueUnassignedAfterGS.iloc[0:500]
+listToCheck1 = listOfUniqueUnassignedAfterGS.iloc[0:6000]
 listToCheck2 = listOfUniqueUnassignedAfterGS.iloc[6001:12000]
 listToCheck3 = listOfUniqueUnassignedAfterGS.iloc[12001:18000]
 listToCheck4 = listOfUniqueUnassignedAfterGS.iloc[18001:24000]
@@ -293,7 +293,7 @@ for index, row in listToCheck1.iterrows():
         # === Post to dataframe =========
         apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
                                                        'preferredTerm': currPrefTerm,
-                                                       'SemanticTypeName': [currSemTypes]}, index=[0]), ignore_index=True)
+                                                       'SemanticTypeName': currSemTypes}), ignore_index=True)
         print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
         # time.sleep(.06)
     else:
@@ -356,8 +356,8 @@ newAssignments7 = pd.read_excel(localDir + 'apiGetNormalizedString7.xlsx')
 
 # Put dataframes together into one; df = df1.append([df2, df3])
 #afterUmlsApi1 = newAssignments1.append([newAssignments2, newAssignments3, newAssignments4, newAssignments5])
-afterUmlsApi1 = newAssignments7.append([newAssignments6])
-
+#afterUmlsApi1 = newAssignments7.append([newAssignments6])
+afterUmlsApi1 = newAssignments7
 
 '''
 afterUmlsApi1 = afterUmlsApi1.append(newAssignments3)
@@ -490,11 +490,6 @@ logAfterUmlsApi = pd.read_excel(localDir + 'logAfterUmlsApi.xlsx')
 '''
 
 
-
-
-
-
-
 # ------------------------------------
 # Visualize results - logAfterUmlsApi
 # ------------------------------------
@@ -503,7 +498,7 @@ logAfterUmlsApi = pd.read_excel(localDir + 'logAfterUmlsApi.xlsx')
 totCount = len(logAfterUmlsApi1)
 unassigned = logAfterUmlsApi1['SemanticGroup'].isnull().sum()
 assigned = totCount - unassigned
-labels = ['Assigned', 'Unassigned'm]
+labels = ['Assigned', 'Unassigned']
 sizes = [assigned, unassigned]
 colors = ['lightskyblue', 'lightcoral']
 explode = (0.1, 0)  # explode 1st slice
@@ -531,8 +526,6 @@ plt.gcf().subplots_adjust(left=0.3)
 
 # Remove listOfUniqueUnassignedAfterGS, listToCheck1, etc., logAfterGoldStandard, logAfterUmlsApi1,
 # newAssignments1 etc.
-
-
 
 #%%
 # =======================
@@ -562,6 +555,8 @@ GoldStandard.drop(58027, inplace=True)
 writer = pd.ExcelWriter('GoldStandard_master.xlsx')
 GoldStandard.to_excel(writer,'GoldStandard')
 writer.save()
+
+
 
 
 

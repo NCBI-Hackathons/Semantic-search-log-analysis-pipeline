@@ -80,7 +80,7 @@ import os
 import string
 
 # Set working directory
-os.chdir('/Users/wendlingd/_webDS')
+os.chdir('Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-/Users/wendlingd/_webDS')
 
 localDir = '01_Text_wrangling_files/'
 
@@ -91,7 +91,7 @@ one quarter, one year, whatever.
 '''
 
 # What is your new log file named?
-newSearchLogFile = '00_Source_files/week31.xlsx'
+newSearchLogFile = 'week31.xlsx'
 
 # Bring in historical file of (somewhat edited) matches
 GoldStandard = localDir + 'GoldStandard_Master.xlsx'
