@@ -12,3 +12,8 @@ Four benefits of analyzing site search - we will be able to:
 2. **Improve our search interface.** This analysis might help us locate terms that need to be added to the search autocomplete. Or, it could help us improve the search results interface.
 3. **Cluster and analyze trends that we know about.** For multi-faceted topics that directly relate to our mission, we could create customized analyses using Python to collect the disparate keywords people might search for, into a single "bucket." Where in the site is there interest in various facets of this subject? Analyzing a trend can show us new constellations of resources that we may not be treating as related. If we were to select a constellation topic such as "opioids" as a topic of study, our bucket might include terms around Fentanyl, heroin, drug treatment, overdose, emergency medicine, etc.), and we could then look at where this person should be in our site, and change the site to help them get there.
 4. **Focus staff work onto new trends, as the trends emerge.** When something new starts to happen that can be matched to our mission statement, we can start new content projects to address the emerging need.
+
+Hackathon Changelog:
+1. Changed scripts to allow multiple semantic categories per search term to be retrieved from the UMLS API.
+2. Create an internal website to review the semantic categories of search terms submitted to the library.
+
