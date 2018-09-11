@@ -14,12 +14,10 @@ SCRIPT CONTENTS
 
 1. Start-up
 2. UmlsApi1 - Normalized string matching
-3. Isolate entries updated by API, complete tagging, and match to the 
+3. Isolate entries updated by API, complete tagging, and match to the
    current version of the search log - logAfterUmlsApi
-4. Create logAfterUmlsApi as an update to logAfterGoldStandard by appending 
-   newUmlsWithSemanticGroupData
-5. Update GoldStandard
-6. Create new 'uniques' dataframe/file for fuzzy matching
+Stop   newUmlsWithSemanticGroupData
+Stop 6. Create new 'uniques' dataframe/file for fuzzy matching
 
 
 7. Google Translate API, https://cloud.google.com/translate/
@@ -33,11 +31,11 @@ But it's not free; https://stackoverflow.com/questions/37667671/is-it-possible-t
 
 8. RxNorm API
 
-9. UmlsApi4 - Re-run first config - Create logAfterUmlsApi4 as an 
-   update to logAfterUmlsApi by 
-   
+9. UmlsApi4 - Re-run first config - Create logAfterUmlsApi4 as an
+   update to logAfterUmlsApi by
+
    append newUmlsWithSemanticGroupData
-   
+
 10. Create updated training file (GoldStandard) for ML script
 
 
@@ -53,11 +51,11 @@ Add SemanticNetworkReference.SemanticTypeCode to what goes into the logs, for ML
 RESOURCES
 ----------
 
-Register at UMLS, get a UMLS-UTS API key, and add it below. This is the 
+Register at UMLS, get a UMLS-UTS API key, and add it below. This is the
 primary source for Semantic Type classifications.
 https://documentation.uts.nlm.nih.gov/rest/authentication.html
-UMLS quick start: 
-UMLS description of what Normalized String option is, 
+UMLS quick start:
+UMLS description of what Normalized String option is,
 https://uts.nlm.nih.gov/doc/devGuide/webservices/metaops/find/find2.html
 """
 
@@ -82,14 +80,14 @@ import os
 os.chdir('/Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-')
 
 
-localDir = '02_Run_APIs_files/'
+localDir = ''
 
 # If you're starting a new session an this is not already open
 listOfUniqueUnassignedAfterGS = 'listOfUniqueUnassignedAfterGS.xlsx'
 listOfUniqueUnassignedAfterGS = pd.read_excel(listOfUniqueUnassignedAfterGS)
 
 # Bring in historical file of (somewhat edited) matches
-GoldStandard = 'GoldStandard.xlsx'
+GoldStandard = 'GoldStandard_master.xlsx'
 GoldStandard = pd.read_excel(GoldStandard)
 
 
@@ -114,28 +112,28 @@ myUTSAPIkey = get_umls_api_key()
 
 
 '''
-GoldStandard.xlsx - Already-assigned term list, from UMLS and other sources, 
+GoldStandard_master.xlsx - Already-assigned term list, from UMLS and other sources,
     vetted.
 '''
 
 
 '''
-SemanticNetworkReference - Customized version of the list at 
-https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html, 
-to be used to put search terms into huge bins. Should be integrated into 
+SemanticNetworkReference - Customized version of the list at
+https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html,
+to be used to put search terms into huge bins. Should be integrated into
 GoldStandard and be available at the end of the ML matching process.
 '''
 SemanticNetworkReference = 'SemanticNetworkReference.xlsx'
 
 
-''' 
+'''
 - Run what remains against the UMLS API.
 
 Requires having your own license and API key; see https://www.nlm.nih.gov/research/umls/
-Not shown here: 
+Not shown here:
     - In huge files I sort by count and focus on terms searched by multiple
     or many people. The 'long tail' can be huge.
-    - I have a database of terms aready assigned. I match these before 
+    - I have a database of terms aready assigned. I match these before
     contacting UMLS; no need to check them again. Shortens processing time.
 More options:
     https://documentation.uts.nlm.nih.gov/rest/home.html
@@ -168,10 +166,10 @@ semUri = "https://uts-ws.nlm.nih.gov/rest/content/current/CUI/"
 # 2. UmlsApi1 - Normalized string matching
 # =========================================
 '''
-In this run the API calls use the Normalized String setting. Example: 
-for the input string Yellow leaves, normalizedString would return two strings, 
-leaf yellow and leave yellow. Each string would be matched exactly to the 
-strings in the normalized string index to return a result. 
+In this run the API calls use the Normalized String setting. Example:
+for the input string Yellow leaves, normalizedString would return two strings,
+leaf yellow and leave yellow. Each string would be matched exactly to the
+strings in the normalized string index to return a result.
 
 Re-start:
 # listOfUniqueUnassignedAfterGS = pd.read_excel('listOfUniqueUnassignedAfterGS.xlsx')
@@ -192,7 +190,7 @@ listOfUniqueUnassignedAfterGS = listOfUniqueUnassignedAfterGS.loc[(listOfUniqueU
 
 
 # listToCheck1 = unassignedAfterGS.iloc[0:20]
-listToCheck1 = listOfUniqueUnassignedAfterGS.iloc[0:6000]
+listToCheck1 = listOfUniqueUnassignedAfterGS.iloc[0:500]
 listToCheck2 = listOfUniqueUnassignedAfterGS.iloc[6001:12000]
 listToCheck3 = listOfUniqueUnassignedAfterGS.iloc[12001:18000]
 listToCheck4 = listOfUniqueUnassignedAfterGS.iloc[18001:24000]
@@ -215,7 +213,7 @@ listToCheck4 = listToCheck4.loc[mask]
 
 
 # If multiple sessions required, saving to file might help
-writer = pd.ExcelWriter(localDir + 'listToCheck7.xlsx')
+writer = pd.ExcelWriter(localDir + 'listToCheck7z.xlsx')
 listToCheck7.to_excel(writer,'listToCheck7')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
@@ -238,12 +236,12 @@ listToCheck1 = unassignedAfterGS.iloc[10001:11335]
 '''
 
 
-#%% 
+#%%
 # ----------------------------------------------------------
 # Run this block after changing listToCheck# top and bottom
 # ----------------------------------------------------------
 '''
-Until you put this into a function, you need to change listToCheck# 
+Until you put this into a function, you need to change listToCheck#
 and apiGetNormalizedString# counts every run!
 Stay below 30 API requests per second. With 4 API requests per item
 (2 .get and 2 .post requests)...
@@ -256,24 +254,24 @@ time.sleep(.07):  ~38 minutes to do 6,000; 158 per minute / 2.6 items per second
 apiGetNormalizedString = pd.DataFrame()
 apiGetNormalizedString['adjustedQueryCase'] = ""
 apiGetNormalizedString['preferredTerm'] = ""
-apiGetNormalizedString['SemanticTypeName'] = ""
+apiGetNormalizedString['SemanticTypeName'] = list()
 
 '''
-For file 6, 7/5/18 1:05 p.m.: SSLError: HTTPSConnectionPool(host='utslogin.nlm.nih.gov', 
-port=443): Max retries exceeded with url: 
-/cas/v1/api-key/TGT-480224-qLwYAMKl5cTfa7Jwb7RWZ3kfexPUm479HfddD7yVUKt79lZ0Ta-cas 
+For file 6, 7/5/18 1:05 p.m.: SSLError: HTTPSConnectionPool(host='utslogin.nlm.nih.gov',
+port=443): Max retries exceeded with url:
+/cas/v1/api-key/TGT-480224-qLwYAMKl5cTfa7Jwb7RWZ3kfexPUm479HfddD7yVUKt79lZ0Ta-cas
 (Caused by SSLError(SSLError("bad handshake: SysCallError(60, 'ETIMEDOUT')",),))
 
 Later, run 6 and 7
 '''
 
 
-for index, row in listToCheck7.iterrows():
+for index, row in listToCheck1.iterrows():
     currLogTerm = row['adjustedQueryCase']
     # === Get 'preferred term' and its concept identifier (CUI/UI) =========
     stTicket = requests.post(todaysTgt, data = {'service':'http://umlsks.nlm.nih.gov'}) # Get single-use Service Ticket (ST)
     # Example: GET https://uts-ws.nlm.nih.gov/rest/search/current?string=tylenol&sabs=MSH&ticket=ST-681163-bDfgQz5vKe2DJXvI4Snm-cas
-    tQuery = {'string':currLogTerm, 'searchType':'normalizedString', 'ticket':stTicket.text} # removed 'sabs':'MSH', 
+    tQuery = {'string':currLogTerm, 'searchType':'normalizedString', 'ticket':stTicket.text} # removed 'sabs':'MSH',
     getPrefTerm = requests.get(uiUri, params=tQuery)
     getPrefTerm.encoding = 'utf-8'
     tItems  = json.loads(getPrefTerm.text)
@@ -293,10 +291,10 @@ for index, row in listToCheck7.iterrows():
         for name in semJson["semanticTypes"]:
             currSemTypes.append(name["name"]) #  + " ; "
         # === Post to dataframe =========
-        apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm, 
-                                                       'preferredTerm': currPrefTerm, 
-                                                       'SemanticTypeName': currSemTypes[0]}, index=[0]), ignore_index=True)
-        print('{} --> {}'.format(currLogTerm, currSemTypes[0])) # Write progress to console
+        apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
+                                                       'preferredTerm': currPrefTerm,
+                                                       'SemanticTypeName': [currSemTypes]}, index=[0]), ignore_index=True)
+        print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
         # time.sleep(.06)
     else:
        # Post "NONE" to database and restart loop
@@ -312,13 +310,13 @@ apiGetNormalizedString.to_excel(writer,'apiGetNormalizedString')
 writer.save()
 
 
-# Free up memory: Remove listToCheck, listToCheck1, listToCheck2, listToCheck3, 
+# Free up memory: Remove listToCheck, listToCheck1, listToCheck2, listToCheck3,
 # listToCheck4, nonForeign, searchLog, unassignedAfterGS
 
 
 #%%
 # ==================================================================
-# 3. Isolate entries updated by API, complete tagging, and match to 
+# 3. Isolate entries updated by API, complete tagging, and match to
 # the current version of the search log - logAfterUmlsApi
 # ==================================================================
 '''
@@ -327,9 +325,9 @@ To Do:
     Isolate new assignments and:
     - merge them into the master version of the log
     - add to GoldStandard for next time
- 
+
  # Move unassigned entries into workflow for human identification
- 
+
 To re-start
 
 unassignedAfterGS = pd.read_excel(localDir + 'unassignedAfterGS.xlsx')
@@ -339,27 +337,26 @@ listFromApi = pd.read_excel('listFromApi1-April-May.xlsx')
 assignedByUmlsApi = pd.read_excel(localDir + 'assignedByUmlsApi.xlsx')
 
 # Fix temporary issue of nulls in SemanticTypeName, and wrong col name semTypeName
- 
+
 listFromApi.drop(['SemanticTypeName'], axis=1, inplace=True)
 listFromApi.rename(columns={'semTypeName': 'SemanticTypeName'}, inplace=True)
 
 # listFromApi = listFromApi.dropna(subset=['SemanticTypeName'])
  '''
- 
+
 
 # If you stored output from UMLS API in files, re-open and unite
-newAssignments1 = pd.read_excel(localDir + 'apiGetNormalizedString1.xlsx')
-newAssignments2 = pd.read_excel(localDir + 'apiGetNormalizedString2.xlsx')
-newAssignments3 = pd.read_excel(localDir + 'apiGetNormalizedString3.xlsx')
-newAssignments4 = pd.read_excel(localDir + 'apiGetNormalizedString4.xlsx')
-newAssignments5 = pd.read_excel(localDir + 'apiGetNormalizedString5.xlsx')
-newAssignments6 = pd.read_excel(localDir + 'apiGetNormalizedString6.xlsx')
+#newAssignments1 = pd.read_excel(localDir + 'apiGetNormalizedString1.xlsx')
+#newAssignments2 = pd.read_excel(localDir + 'apiGetNormalizedString2.xlsx')
+#newAssignments3 = pd.read_excel(localDir + 'apiGetNormalizedString3.xlsx')
+#newAssignments4 = pd.read_excel(localDir + 'apiGetNormalizedString4.xlsx')
+#newAssignments5 = pd.read_excel(localDir + 'apiGetNormalizedString5.xlsx')
+#newAssignments6 = pd.read_excel(localDir + 'apiGetNormalizedString6.xlsx')
 newAssignments7 = pd.read_excel(localDir + 'apiGetNormalizedString7.xlsx')
 
-
 # Put dataframes together into one; df = df1.append([df2, df3])
-afterUmlsApi1 = newAssignments1.append([newAssignments2, newAssignments3, newAssignments4, newAssignments5])
-afterUmlsApi1 = newAssignments6.append([newAssignments7])
+#afterUmlsApi1 = newAssignments1.append([newAssignments2, newAssignments3, newAssignments4, newAssignments5])
+afterUmlsApi1 = newAssignments7.append([newAssignments6])
 
 
 '''
@@ -391,7 +388,7 @@ writer.save()
 
 # Bring in subject category master file
 # SemanticNetworkReference = pd.read_excel(localDir + 'SemanticNetworkReference.xlsx')
-SemanticNetworkReference = pd.read_excel(SemanticNetworkReference)
+SemanticNetworkReference = pd.read_excel('SemanticNetworkReference.xlsx')
 
 # Reduce to required cols
 SemTypeData = SemanticNetworkReference[['SemanticTypeName', 'SemanticGroupCode', 'SemanticGroup', 'CustomTreeNumber', 'BranchPosition']]
@@ -401,16 +398,18 @@ SemTypeData = SemanticNetworkReference[['SemanticTypeName', 'SemanticGroupCode',
 newUmlsWithSemanticGroupData = pd.merge(assignedByUmlsApi1, SemTypeData, how='left', on='SemanticTypeName')
 
 
+
+
 #%%
 # ============================================================================
-# 4. Create logAfterUmlsApi as an update to logAfterGoldStandard by appending 
+# 4. Create logAfterUmlsApi as an update to logAfterGoldStandard by appending
 # newUmlsWithSemanticGroupData
 # ============================================================================
 
 '''
 Depending on what you're processing, use this or the next section of the below.
 
-Depends on how you choose to process - Like, down to one occurrence to API 
+Depends on how you choose to process - Like, down to one occurrence to API
 in first batch, or not.
 '''
 
@@ -458,7 +457,7 @@ logAfterUmlsApi1.drop(['preferredTerm_x', 'preferredTerm_y',
                           'SemanticTypeName_x', 'SemanticTypeName_y',
                           'SemanticGroup_x', 'SemanticGroup_y',
                           'SemanticGroupCode_x', 'SemanticGroupCode_y',
-                          'BranchPosition_x', 'BranchPosition_y', 
+                          'BranchPosition_x', 'BranchPosition_y',
                           'CustomTreeNumber_x', 'CustomTreeNumber_y'], axis=1, inplace=True)
 logAfterUmlsApi1.rename(columns={'preferredTerm2': 'preferredTerm',
                                     'SemanticTypeName2': 'SemanticTypeName',
@@ -478,7 +477,7 @@ writer.save()
 To Do:
     - Create list of unmatched terms with freq
     - Cluster similar spellings together?
-    
+
 - Look at "Not currently matchable" terms with "high" frequency counts. Eyeball to see if these were incorrectly matched in the past; assign historical term or update all to new term, save in gold standard file.
 - Process entries from the PubMed product page.
 - If you haven't done so, update RegEx list to improve future matching.
@@ -491,15 +490,20 @@ logAfterUmlsApi = pd.read_excel(localDir + 'logAfterUmlsApi.xlsx')
 '''
 
 
+
+
+
+
+
 # ------------------------------------
 # Visualize results - logAfterUmlsApi
 # ------------------------------------
-    
+
 # Pie for percentage of rows assigned; https://pythonspot.com/matplotlib-pie-chart/
 totCount = len(logAfterUmlsApi1)
 unassigned = logAfterUmlsApi1['SemanticGroup'].isnull().sum()
 assigned = totCount - unassigned
-labels = ['Assigned', 'Unassigned']
+labels = ['Assigned', 'Unassigned'm]
 sizes = [assigned, unassigned]
 colors = ['lightskyblue', 'lightcoral']
 explode = (0.1, 0)  # explode 1st slice
@@ -521,11 +525,11 @@ for i in ax.patches:
     # get_width pulls left or right; get_y pushes up or down
     ax.text(i.get_width()+.1, i.get_y()+.31, \
             str(round((i.get_width()), 2)), fontsize=9, color='dimgrey')
-# invert for largest on top 
+# invert for largest on top
 ax.invert_yaxis()
 plt.gcf().subplots_adjust(left=0.3)
 
-# Remove listOfUniqueUnassignedAfterGS, listToCheck1, etc., logAfterGoldStandard, logAfterUmlsApi1, 
+# Remove listOfUniqueUnassignedAfterGS, listToCheck1, etc., logAfterGoldStandard, logAfterUmlsApi1,
 # newAssignments1 etc.
 
 
@@ -536,7 +540,7 @@ plt.gcf().subplots_adjust(left=0.3)
 # =======================
 
 # Open GoldStandard if needed
-GoldStandard = '01_Pre-processing_files/GoldStandard.xlsx'
+GoldStandard = 'GoldStandard_master.xlsx'
 GoldStandard = pd.read_excel(GoldStandard)
 
 # Append fully tagged UMLS API adds to GoldStandard
@@ -555,7 +559,7 @@ GoldStandard.drop(58027, inplace=True)
 
 
 # Write out the updated GoldStandard
-writer = pd.ExcelWriter('GoldStandard.xlsx')
+writer = pd.ExcelWriter('GoldStandard_master.xlsx')
 GoldStandard.to_excel(writer,'GoldStandard')
 writer.save()
 
@@ -571,7 +575,7 @@ writer.save()
 To Do:
     - Create list of unmatched terms with freq
     - Cluster similar spellings together?
-    
+
 - Look at "Not currently matchable" terms with "high" frequency counts. Eyeball to see if these were incorrectly matched in the past; assign historical term or update all to new term, save in gold standard file.
 - Process entries from the PubMed product page.
 - If you haven't done so, update RegEx list to improve future matching.
@@ -611,36 +615,36 @@ But it's not free; https://stackoverflow.com/questions/37667671/is-it-possible-t
 # ==========================================================================
 '''
 Some foreign terms can be matched. This run does not return a preferred term,
-just returns what vocabulary the term is found in. 
+just returns what vocabulary the term is found in.
 
 Queries with words not in English are ignored by the first API run using
-"normalized string" matching. Here, try flagging what you can and take them 
+"normalized string" matching. Here, try flagging what you can and take them
 out of the percent-complete calculation.
 
 The API apparently only supports U.S. English. RegEx could be used to convert
-UTF-8 Roman characters that are not English... Non-Roman languages (Chinese, 
-Cyrillic, Arabic, Japanese, etc.) are not supported by the API; these should 
+UTF-8 Roman characters that are not English... Non-Roman languages (Chinese,
+Cyrillic, Arabic, Japanese, etc.) are not supported by the API; these should
 be kept out of the API runs entirely.
 
 6/22/18, from David of UMLS support, TRACKING:000308010
 
-> Can the UMLS REST API tell me the term's language? 
+> Can the UMLS REST API tell me the term's language?
 
-One option would be to specify returnIdType=sourceUi for your search 
-request. For example: 
- 
+One option would be to specify returnIdType=sourceUi for your search
+request. For example:
+
 https://uts-ws.nlm.nih.gov/rest/search/current?string=Infarto de miocardio&returnIdType=sourceUi&ticket=
 
-This will give you a set of codes back where there is a match, but will 
-also return a vocabulary (rootSource). If you have that, you can get 
-the language (in this case, Spanish). The first result may be all you 
-need. If you have the rootSource, you can match it to the "abbreviation" 
-and look up the language here: https://uts-ws.nlm.nih.gov/rest/metadata/current/sources. 
- 
-It won't be perfect. I'm seeing some problems with accented characters. 
-For example, coração returns no results, so that's not great, but may 
-not matter. Some strings will appear in multiple languages, too. 
- 
+This will give you a set of codes back where there is a match, but will
+also return a vocabulary (rootSource). If you have that, you can get
+the language (in this case, Spanish). The first result may be all you
+need. If you have the rootSource, you can match it to the "abbreviation"
+and look up the language here: https://uts-ws.nlm.nih.gov/rest/metadata/current/sources.
+
+It won't be perfect. I'm seeing some problems with accented characters.
+For example, coração returns no results, so that's not great, but may
+not matter. Some strings will appear in multiple languages, too.
+
 Let me know how that works for you. - David
 '''
 
@@ -687,21 +691,21 @@ listToCheck1 = unassignedAfterGS.iloc[10001:11335]
 '''
 Work with PostMan app to test/approve
 
-David from UMLS: One option would be to specify returnIdType=sourceUi for 
+David from UMLS: One option would be to specify returnIdType=sourceUi for
 your search request. For example:
- 
+
 https://uts-ws.nlm.nih.gov/rest/search/current?string=Infarto de miocardio&returnIdType=sourceUi&ticket=
 
-This will give you a set of codes back where there is a match, but will 
-also return a vocabulary (rootSource). If you have that, you can get the 
-language (in this case, Spanish). The first result may be all you need. 
-If you have the rootSource, you can match it to the "abbreviation" and 
-look up the language here: https://uts-ws.nlm.nih.gov/rest/metadata/current/sources. 
- 
-It won't be perfect. I'm seeing some problems with accented characters. 
-For example, coração returns no results, so that's not great, but may 
-not matter. Some strings will appear in multiple languages, too. 
- 
+This will give you a set of codes back where there is a match, but will
+also return a vocabulary (rootSource). If you have that, you can get the
+language (in this case, Spanish). The first result may be all you need.
+If you have the rootSource, you can match it to the "abbreviation" and
+look up the language here: https://uts-ws.nlm.nih.gov/rest/metadata/current/sources.
+
+It won't be perfect. I'm seeing some problems with accented characters.
+For example, coração returns no results, so that's not great, but may
+not matter. Some strings will appear in multiple languages, too.
+
 Let me know how that works for you.
 '''
 
@@ -733,7 +737,7 @@ for index, row in listToCheck1.iterrows():
     # === Get 'source vocab' =========
     stTicket = requests.post(todaysTgt, data = {'service':'http://umlsks.nlm.nih.gov'}) # Get single-use Service Ticket (ST)
     # Example: GET https://uts-ws.nlm.nih.gov/rest/search/current?string=tylenol&sabs=MSH&ticket=ST-681163-bDfgQz5vKe2DJXvI4Snm-cas
-    termQuery = {'string':currLogTerm, 'ticket':stTicket.text} # removed 'searchType':'word' (it's the default),      'sabs':'MSH', 
+    termQuery = {'string':currLogTerm, 'ticket':stTicket.text} # removed 'searchType':'word' (it's the default),      'sabs':'MSH',
     getSourceVocab = requests.get(uiUri, params=termQuery)
     getSourceVocab.encoding = 'utf-8'
     tItems = json.loads(getSourceVocab.text)
@@ -742,7 +746,7 @@ for index, row in listToCheck1.iterrows():
         currUi = tJson["results"][0]["rootSource"]
         sourceVocab = tJson["results"][0]["rootSource"]
         # === Post to dataframe =========
-        listOfSourceVocabularies = listOfSourceVocabularies.append(pd.DataFrame({'adjustedQueryCase': currLogTerm, 
+        listOfSourceVocabularies = listOfSourceVocabularies.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
                                                        'sourceVocab': sourceVocab}, index=[0]), ignore_index=True)
         print('{} --> {}'.format(currLogTerm, sourceVocab)) # Write progress to console
         time.sleep(.07)
@@ -759,7 +763,7 @@ listOfSourceVocabularies.to_excel(writer,'listOfSourceVocabularies')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
 
-# Free up memory: Remove listToCheck, listToCheck1, listToCheck2, listToCheck3, 
+# Free up memory: Remove listToCheck, listToCheck1, listToCheck2, listToCheck3,
 # listToCheck4, nonForeign, searchLog, unassignedAfterGS
 
 
@@ -774,14 +778,14 @@ writer.save()
 
 
 # ------------------------------------------------------
-# Match vocabCheck 
+# Match vocabCheck
 # ------------------------------------------------------
 '''
 FIXME - RESULTING LIST NEEDS TO BE VETTED; START WITH HIGHEST-FREQUENCY USE.
 
 Update naming? this is the result from the API run for languages
 
-This custom list of vocabs does not include and English vocabs, therefore, 
+This custom list of vocabs does not include and English vocabs, therefore,
 only foreign matches are returned, which is what we want.
 
 Re-start:
@@ -813,10 +817,10 @@ PerhapsForeign.to_excel(writer,'PerhapsForeign')
 writer.save()
 
 '''
-In Excel or Flask, delete rows with terms that we use in English; check that 
-tyhe remaining rows contain terms that most English speakers would think are 
-foriegn. 
-Supplement cols for the definite foreign terms, append to GoldStandard as 
+In Excel or Flask, delete rows with terms that we use in English; check that
+tyhe remaining rows contain terms that most English speakers would think are
+foriegn.
+Supplement cols for the definite foreign terms, append to GoldStandard as
 foreign terms.
 '''
 
@@ -835,13 +839,13 @@ foreign terms.
 
 #%%
 # ===========================================================================
-# 5. Second UMLS API clean-up - Create logAfterUmlsApi2 as an 
+# 5. Second UMLS API clean-up - Create logAfterUmlsApi2 as an
 # update to logAfterUmlsApi by appending newUmlsWithSemanticGroupData
 # ===========================================================================
 '''
 Use this AFTER you do a SECOND run against the UMLS Metathesaurus API.
 
-Re-start: 
+Re-start:
 logAfterUmlsApi2 = pd.read_excel(localDir + 'logAfterUmlsApi2.xlsx')
 '''
 
@@ -867,7 +871,7 @@ logAfterUmlsApi2.drop(['preferredTerm_x', 'preferredTerm_y',
                           'SemanticTypeName_x', 'SemanticTypeName_y',
                           'SemanticGroup_x', 'SemanticGroup_y',
                           'SemanticGroupCode_x', 'SemanticGroupCode_y',
-                          'BranchPosition_x', 'BranchPosition_y', 
+                          'BranchPosition_x', 'BranchPosition_y',
                           'CustomTreeNumber_x', 'CustomTreeNumber_y'], axis=1, inplace=True)
 logAfterUmlsApi2.rename(columns={'preferredTerm2': 'preferredTerm',
                                     'SemanticTypeName2': 'SemanticTypeName',
@@ -908,11 +912,10 @@ currentSemTypeCount = currentSemTypeCount.reset_index()
 currentSemTypeCount = currentSemTypeCount.rename(columns={'index': 'SemanticTypeName'})
 
 
-
 # ------------------------------------
 # Visualize results - logAfterUmlsApi2
 # ------------------------------------
-    
+
 # Pie for percentage of rows assigned; https://pythonspot.com/matplotlib-pie-chart/
 totCount = len(logAfterUmlsApi2)
 unassigned = logAfterUmlsApi2['SemanticGroup'].isnull().sum()
@@ -939,7 +942,7 @@ for i in ax.patches:
     # get_width pulls left or right; get_y pushes up or down
     ax.text(i.get_width()+.1, i.get_y()+.31, \
             str(round((i.get_width()), 2)), fontsize=9, color='dimgrey')
-# invert for largest on top 
+# invert for largest on top
 ax.invert_yaxis()
 plt.gcf().subplots_adjust(left=0.3)
 
