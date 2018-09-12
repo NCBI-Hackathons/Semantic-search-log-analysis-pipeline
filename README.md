@@ -19,4 +19,8 @@ Hackathon Changelog:
 
 ## Pipeline
 
+Whole project view.
+
+9/12/2018: Pieces not completed have a dotted border.
+
 ![Contact Dan for assistance](searchLogAnalysisPipeline.png "Pipeline")
