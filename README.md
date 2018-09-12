@@ -27,4 +27,11 @@ Whole project view.
 ## Future Directions
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
 2. Cluster by text body instead of headings. (tf-idf)
-3. Google's search algorithm has a very good suggestion system backed by billions of search queries to correct for misspellings - using an available API could be worth looking into instead of reinventing the wheel.
+3. Other NLP Toolset Integrations: 
+  + Google's search algorithm has a very good suggestion system backed by billions of search queries to correct for misspellings - using an available API could be worth looking into instead of reinventing the wheel.
+  + Stanford has a toolset for named entity extraction, that could be used on web site pages
+4. R&D whether to start pulling down relationships to assist with queries such as yoga nutrition. https://www.nlm.nih.gov/research/umls/META3_current_relations.html
+5. R&D switching to beautifulsoup and use tf-idf vectorize; create a word bank for each topic.
+6. Scrub the logs - change col headings, search for ###-####, search for \@
+7. Post draft of business plan document for NLM management
+8. Consider capturing IDs for preferred terms for later use? So people can use the wikidata, sparql, etc. connections?
