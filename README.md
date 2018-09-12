@@ -1,4 +1,4 @@
-# Semantic-search-log-analysis Pipeline (SSLAP)
+# Semantic Search Log Analysis Pipeline (SSLAP)
 
 ## Touchpoint analysis for web visitors: Site search
 
