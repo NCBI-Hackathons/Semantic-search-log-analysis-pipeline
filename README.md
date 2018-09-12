@@ -17,3 +17,6 @@ Hackathon Changelog:
 1. Changed scripts to allow multiple semantic categories per search term to be retrieved from the UMLS API.
 2. Create an internal website to review the semantic categories of search terms submitted to the library.
 
+## Pipeline
+
+![Contact Dan for assistance](searchLogAnalysisPipeline.png "Pipeline")
