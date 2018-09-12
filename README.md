@@ -26,4 +26,4 @@ Whole project view.
 
 ## Future Directions
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
-2. Current ML approach to cluster search queries implements headings of articles, classification could improve if algorithm uses the actual text body create clusters as that will provide a larger bank of words to define a cluster and may include key words used by a certain topic. However, words will have to be treated a certain way - obviously tf-idf is a reasonable approach to deal with common words in a text body. In particular, the semantic topic analysis 
+2. Classification could improve if algorithm uses the text body to create clusters and identify include key words used by a certain topic. Words will have to be treated a certain way - tf-idf can be used to screen for most common terms found in all topics.
