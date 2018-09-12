@@ -27,3 +27,4 @@ Whole project view.
 ## Future Directions
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
 2. Cluster by text body instead of headings. (tf-idf)
+3. Google's search algorithm has a very good suggestion system backed by billions of search queries to correct for misspellings - using an available API could be worth looking into instead of reinventing the wheel.
