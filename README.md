@@ -26,4 +26,4 @@ Whole project view.
 
 ## Future Directions
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
-2. Classification could improve if algorithm uses the text body to create clusters and identify include key words used by a certain topic. Words will have to be treated a certain way - tf-idf can be used to screen for most common terms found in all topics.
+2. Cluster by text body instead of headings. (tf-idf)
