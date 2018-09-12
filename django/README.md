@@ -12,3 +12,11 @@ To initialize with the 'gold standard' file, run:
 * python manage.py migrate
 * python manage.py loaddata assignments.json
 * python manage.py runserver
+
+# Approval Interface
+
+![Approval Tool](approval_tool.png "Approval Tool")
+
+# Vetting Interface
+
+![Vetting Tool](vetting_tool.png "Vetting Tool")
