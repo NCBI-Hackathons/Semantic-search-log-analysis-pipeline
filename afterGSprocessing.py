@@ -1,115 +1,89 @@
-import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+import pandas as pd
 import numpy as np
-import sys
-from xlrd import *
-import xlrd
-from datetime import datetime
+import matplotlib.pyplot as plt
+import random
+from scipy.optimize import basinhopping, differential_evolution
 
-###########
-## currently afterGS is hardcoded so please change that
+filename = 'logAfterGoldStandard.xlsx'
 
-aftergs="logAfterGoldStandard.xlsx"
-wb = open_workbook(aftergs)
+data = pd.read_excel(filename)
+data.index = data.Timestamp
+d = data.groupby('SemanticGroup').resample('1H').count()['SemanticGroup'].unstack().T
 
-umlsgrps = ["Activities and Behaviors", "Anatomy", "Chemicals and Drugs", "Concepts and Ideas", "Devices", "Disorders", "Genes and Molecular Sequences", "Geographic Areas", "Living Beings", "Objects", "Occupations", "Organizations", "Phenomena", "Physiology", "Procedures"]
-semGrp = "SemanticGroup"
-dates = "Timestamp"
-dateList = []
-grpDict = {}
+color_sequence = ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
+                  '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
+                  '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
+                  '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+
+fig, ax = plt.subplots(1,1, figsize=(12,12))
+# Remove the plot frame lines. They are unnecessary here.
+ax.spines['top'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['left'].set_visible(False)
+
+# Ensure that the axis ticks only show up on the bottom and left of the plot.
+# Ticks on the right and top of the plot are generally unnecessary.
+ax.get_xaxis().tick_bottom()
+ax.get_yaxis().tick_left()
+
+fig.subplots_adjust(left=.06, right=.75, bottom=.06, top=.94)
+
+out = d.resample('12H').sum()
+
+ax.grid(True, axis='y')
+ax.tick_params(axis='both', which='both', bottom=False, top=False,
+                labelbottom=True, left=False, right=False, labelleft=True)
+
+# Optimizing label position to avoid overlap
+
+p = list(out.iloc[-1].items())
+p.sort(key=lambda x: x[1])
+
+dist = 3
+m = -15
+step = 0.5
+q = []
+for k,v in p:
+    if np.isnan(v):
+        q.append(-1)
+    else:
+        q.append(v-1)
 
 
-for s in wb.sheets():
-    semanticGroupInd = 0
-    dateInd = 0
-    dateHash = {}
+def conflicts(x):
+    x = np.array(x)
+    diff = np.diff(x)
+    diff = diff[diff < dist].size
+    return diff
+
+def improve_placement(q, dist=3, m=-15, step=0.5):
+    while conflicts(q) > 0:
+        for i in range(len(q) // 2):
+            if (q[i+1] - q[i]) < dist:
+                if (q[i]-step) > m:
+                    q[i] -= step
+                q[i+1] += step / 2
+            if (q[-i-1] - q[-i-2]) < dist:
+                q[-i-1] += step
+                q[-i-2] -= step / 2
+    return q
+
+
+
+q = improve_placement(q, dist=5)
+new_positions = {l:v for (l,old_value),v in zip(p,q)}
+
+x_position = out.index[-1] + (out.index[-1] - out.index[0])/50
+for i, (label, value) in enumerate(out.iloc[-1].items()):
+    ax.plot(out.index, out[label], c=color_sequence[i])
+    ax.text(x_position, new_positions[label], label, 
+                    fontsize=14, color=color_sequence[i])
+
     
-    nonClassified = 0
-    
-     # Get Heading Indices
- # =============================================================================
-    for col in range(s.ncols):
-        if(s.cell(0,col).value == (semGrp)):
-            semanticGroupInd=col
-        elif(s.cell(0,col).value == (dates)):
-            dateInd=col
-    if(dateInd==0 and semanticGroupInd == 0):
-        print("Headings not found. Please label SemanticGroup or Timestamp")
-        sys.exit(1)
-
-    # If Semantic Group is null then skip
-#=============================================================================
- 
-    a1 = s.cell(1,5).value
-    print(a1)
-    a1_datetime = datetime(*xlrd.xldate_as_tuple(a1, wb.datemode))
-    print('datetime: %s' % a1_datetime)
-#    print(type(a1_datetime))
-#    #dt_object = datetime.strptime(a1_datetime, "%Y-%b-%d")
-#    
-
-    for row in range(1, s.nrows):
-        current_semgrp = s.cell(row,semanticGroupInd).value
-        if(current_semgrp == "" or current_semgrp == u''):
-            nonClassified+=1
-            continue
-        day_val = datetime(*xlrd.xldate_as_tuple(s.cell(row,dateInd).value, wb.datemode))
-#        for col in range(s.ncols):
-#            val.append(str(s.cell(row,col).value))
-        day_val = str(day_val.month) + str( day_val.day) + str(day_val.year)
-        if( day_val not in dateHash):
-            dateHash[day_val] = []
-            dateList.append(day_val)
-        dateHash[day_val].append(s.cell(row,semanticGroupInd).value)
-   # print(dateHash)
-    
-#   process results
-#=============================
-maxcount = 0
-
-countSemGrpLst ={}
-for day in dateHash:
-    grpInc = {}
-    semGrpLst = dateHash[day]
-    for grp in semGrpLst:
-        if( grp not in grpInc):
-            grpInc[grp] = 0
-        else:
-            grpInc[grp] += 1
-    for key in grpInc:
-        count = grpInc[key]
-        if count > maxcount:
-            maxcount = count
-        
-    countSemGrpLst[day] = grpInc
-    print(grpInc)
-print(countSemGrpLst)
-print("nonclassified rows:" + str(nonClassified))
-    #=============================================================================
-## test 1 for one val
-## 
-    
-def plot_a_graph(ax, grp, onegrp):
-    plt.plot(dateList, onegrp, lw=2, alpha=1, label = grp)
-
- 
-def one_grp_plot(grp):
-    onegrp = []
-    for day in dateList:
-        if grp not in countSemGrpLst[day]:
-            onegrp.append(0)
-        else:
-            onegrp.append(countSemGrpLst[day][grp])
-    return onegrp
-#grp = u'Physiology'
-
-#_, ax = plt.subplots()
-plt.figure(figsize=(30, 40))
-for grp in umlsgrps:
-    values = one_grp_plot(grp)
-    plot_a_graph(plt, grp, values)
-
-#plt.set_xlabel("Dates")
-#plt.set_ylabel("Count")
-plt.title('Searches by semantic group')
-plt.legend()
+ax.set_xlabel('Date', size='x-large')
+ax.set_ylabel('Search Frequency', size='x-large')
+ax.set_title('Searches by Semantic Group', size='x-large')
+fig.savefig('searches-by-semantic-group.png', dpi=300)
 plt.show()
