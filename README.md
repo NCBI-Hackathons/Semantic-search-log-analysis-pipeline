@@ -2,9 +2,10 @@
 
 > **Classify web visitor queries so you can chart, and respond to, trends in information seeking**
 
-The logs for internal search for large biomedical web sites can be too verbose and too inharmonious to make sense of. Logs for one NIH site contains more than 200,000 queries per month, with many variations on the same conceptual ideas. Aggregating log entries such as "ObamaCare" and "ACA" and "Affordable Care Act," for example, is far too difficult for a human to parse and take action on. This leads to several missed opportunities in communication management.
+The logs for internal search for large biomedical web sites can be too verbose and too inharmonious to make sense of. Logs for one NIH site contains more than 200,000 queries per month, with many variations on the same conceptual ideas. Aggregating log entries such as "ObamaCare" and "ACA" and "Affordable Care Act," for example, is far too difficult for a human to parse and take action on. This leads to several missed opportunities in web communication management.
 
-Product managers and others COULD BE using this data to understand the environment and their customers better, and improve their web sites, but without automation, the amount of human effort required has not been worth the return on the investment. If there were a way to automatically unite queries that are similar but not the same, under broader topics that could be effectively aggregated and compared over time, then we could more easily explore patterns in the vast amount of data generated, and begin to interpret their meaning.
+Product managers and others COULD BE using this data to understand the information marketplace and understand how to serve their customers better. But without automation, the amount of human effort required has not been worth the return on the investment. If there were a way to automatically unite queries that are similar but not the same, under broader topics that could be effectively aggregated and compared over time, then we could more easily explore patterns in the vast amount of data generated, and begin to interpret their meaning.
+
 
 ## Goals/Scope 
 
@@ -24,11 +25,11 @@ The [Unified Medical Language System (UMLS)](https://www.nlm.nih.gov/research/um
 
 ![Contact Dan for assistance](BiggestMovers-June-NLM_Home.png "Biggest movers, June vs. May")
 
-Given a preferred term, the UMLS API can provide one or two (perhaps more) broader grouping categories called **Semantic Types,** of which there are around 130. (This hierachical report is still under revision.)
+Given a preferred term, the UMLS API can provide one or two (perhaps more) broader grouping categories called [**Semantic Types,**](https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html), of which there are around 130. (This hierachical report is still under revision.)
 
 ![Contact Dan for assistance](SemanticTypes.png "Semantic Types")
 
-At the highest level, there are 15 **Semantic Groups** that cover all of health-medicine and much of the life sciences, in mutually exclusive categories. Here: small sample dataset of only 7 days.
+At the broadest level, there are 15 **Semantic Groups** that cover all of health-medicine and much of the life sciences, in mutually exclusive categories. Here: small sample dataset of only 7 days.
 
 ![Contact Dan for assistance](searches-by-semantic-group.png "Example week")
 
@@ -41,7 +42,9 @@ Whole-project view. We do not have a deployable software package at this time; t
 
 ![Contact Dan for assistance](searchLogAnalysisPipeline.png "Workflow")
 
+
 ## Future Directions
+
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
 2. Cluster by web page text body instead of just the headings and metadata currently used. (tf-idf) This might involve switching to the BeautifulSoup tool, and using tf-idf vectorization; we could create a word bank for each topic.
 3. Other NLP Toolset Integrations: 
