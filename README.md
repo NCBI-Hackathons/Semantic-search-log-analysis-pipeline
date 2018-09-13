@@ -15,6 +15,20 @@ Four benefits of analyzing site search - we will be able to:
 3. **Cluster and analyze trends that we know about.** For multi-faceted topics that directly relate to our mission, we could create customized analyses using Python to collect the disparate keywords people might search for, into a single "bucket." Where in the site is there interest in various facets of this subject? Analyzing a trend can show us new constellations of resources that we may not be treating as related. If we were to select a constellation topic such as "opioids" as a topic of study, our bucket might include terms around Fentanyl, heroin, drug treatment, overdose, emergency medicine, etc.), and we could then look at where this person should be in our site, and change the site to help them get there.
 4. **Focus staff work onto new trends, as the trends emerge.** When something new starts to happen that can be matched to our mission statement, we can start new content projects to address the emerging need.
 
+## Reporting at three levels of specificity / granularity
+
+The UMLS API offers a **preferred term** for what visitors typed, when possible. This is how we are able to standardize multiple customer versions of a search concept into one concept that can be accurately aggregated. Here, a before-and-after study for a home page redesign.
+
+![Contact Dan for assistance](BiggestMovers-June-NLM_Home.png "Biggest movers, June vs. May")
+
+Given a preferred term, the UMLS API can provide one or two (perhaps more) broader grouping categories called **Semantic Types,** of which there are around 130. (This hierachical report is still under revision.)
+
+![Contact Dan for assistance](SemanticTypes.png "Semantic Types")
+
+At the highest-level, there are 15 **Semantic Groups** that cover all of health-medicine and much of the life sciences, in mutually exclusive categories. Here: small sample dataset of only 7 days.
+
+![Contact Dan for assistance](searches-by-semantic-group.png "Example week")
+
 
 ## Workflow
 
