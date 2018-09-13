@@ -17,7 +17,7 @@ Four benefits of analyzing site search - we will be able to:
 
 ## Reporting at three levels of specificity / granularity
 
-The UMLS API offers a **preferred term** for what visitors typed, when possible. This is how we are able to standardize multiple customer versions of a search concept into one concept that can be accurately aggregated. Here, a before-and-after study for a home page redesign.
+The [Unified Medical Language System (UMLS)](https://www.nlm.nih.gov/research/umls/quickstart.html) API offers a **preferred term** for what site visitors typed, when possible. This is how we are able to standardize multiple customer versions of a search concept into one concept that can be accurately aggregated. We also include "fuzzy matching" against data from a web site spidering, because many product and service names, proper names, and other entities are not covered by UMLS. Here, a before-and-after study of how search behavior changed after a home page redesign. 
 
 ![Contact Dan for assistance](BiggestMovers-June-NLM_Home.png "Biggest movers, June vs. May")
 
