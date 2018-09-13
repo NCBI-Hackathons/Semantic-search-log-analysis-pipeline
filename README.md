@@ -16,11 +16,11 @@ Four benefits of analyzing site search - we will be able to:
 4. **Focus staff work onto new trends, as the trends emerge.** When something new starts to happen that can be matched to our mission statement, we can start new content projects to address the emerging need.
 
 
-## Pipeline
+## Workflow / Pipeline
 
 Whole project view.
 
-9/12/2018: Pieces not completed have a dotted border.
+9/13/2018: Incomplete or not-started elements have a dotted border.
 
 ![Contact Dan for assistance](searchLogAnalysisPipeline.png "Pipeline")
 
