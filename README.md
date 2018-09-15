@@ -21,7 +21,7 @@ The Unified Medical Language System (UMLS) API offers a preferred term for what 
 
 ![Contact Dan for assistance](BiggestMovers-June-NLM_Home.png "Biggest movers, June vs. May")
 
-Given a preferred term, the UMLS API can provide one or two (perhaps more) broader grouping categories called Semantic Types, of which there are around 130. (This hierachical report is still under revision.)
+Given a preferred term, the UMLS API can provide one or two (perhaps more) broader grouping categories called [**Semantic Types,**](https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html), of which there are around 130. (This hierachical report is still under revision.)
 
 ![Contact Dan for assistance](SemanticTypes.png "Semantic Types")
 
