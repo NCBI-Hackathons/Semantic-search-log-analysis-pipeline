@@ -8,21 +8,26 @@ Product managers and others COULD BE using this data to understand the environme
 
 ## Goals/Scope 
 
-Four benefits of analyzing site search - we will be able to:
+Benefits of analyzing site search that were addressed in the current work - we will be able to:
 
-1. **Locate and fix site areas where there is a communications mismatch.** When we don’t provide the information that customers had expected, as evidenced by an outsized number of people searching for things that aren't near to the page where they were searching from, we should change the visibility of that content. We could move its search engine optimization (SEO) profile upward or downward as appropriate. This might involve updating the top navigation, the page-level sub-navigation, the page metadata, various content labeling such as headings, or by updating the subject content of the page(s). In some cases retirement of the content might be the appropriate response. Lastly, as recommended by usability and plain language expert Ginny Redish, we should put our site customers' words into our page headings. "The headings in your web content must resonate with your site customers."
-2. **Improve our search interface.** This analysis might help us locate terms that need to be added to the search autocomplete. Or, it could help us improve the search results interface.
-3. **Cluster and analyze trends that we know about.** For multi-faceted topics that directly relate to our mission, we could create customized analyses using Python to collect the disparate keywords people might search for, into a single "bucket." Where in the site is there interest in various facets of this subject? Analyzing a trend can show us new constellations of resources that we may not be treating as related. If we were to select a constellation topic such as "opioids" as a topic of study, our bucket might include terms around Fentanyl, heroin, drug treatment, overdose, emergency medicine, etc.), and we could then look at where this person should be in our site, and change the site to help them get there.
-4. **Focus staff work onto new trends, as the trends emerge.** When something new starts to happen that can be matched to our mission statement, we can start new content projects to address the emerging need.
+1. **Cluster and analyze trends that we know about.** For multi-faceted topics that directly relate to our mission, we could create customized analyses using Python to collect the disparate keywords people might search for, into a single "bucket." Where in the site is there interest in various facets of this subject? Analyzing a trend can show us new constellations of resources that we may not be treating as related. If we were to select a constellation topic such as "opioids" as a topic of study, our bucket might include terms around Fentanyl, heroin, drug treatment, overdose, emergency medicine, etc.), and we could then look at where this person should be in our site, and change the site to help them get there.
+2. **Focus staff work onto new trends, as the trends emerge.** When something new starts to happen that can be matched to our mission statement, we can start new content projects to address the emerging need.
+
 
 ## How to Install Required Packages
+
 ### Hunspell
+
 The product is based on C libraries so before it can be called in Python the libraries must be available on the local machine.
 To begin, clone into the repo at https://github.com/hunspell/hunspell/blob/master/README.md and then follow the instructions for your operating system.
 
+
 ## Using the Hunspell Spellchecker
+
 The hunspell spellchecker software is required for checking the spelling of search terms that are not accepted by the UMLS API the first time around. 
-The repo includes all the tools to make new dictionaries whenever the SPECIALIST LEXICON is updated
+
+The repo includes all the tools to make new dictionaries whenever the SPECIALIST LEXICON is updated.
+
 
 ## Workflow
 
@@ -32,14 +37,14 @@ Whole-project view. We do not have a deployable software package at this time; t
 
 ![Contact Dan for assistance](searchLogAnalysisPipeline.png "Workflow")
 
+
 ## Future Directions
-1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms
-2. Cluster by text body instead of headings. (tf-idf)
+
+1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms.
+2. For matching that won't be in UMLS, spider whole website, clustering by text body instead of only the title/metadatheadings. (tf-idf)
 3. Other NLP Toolset Integrations: 
   + Google's search algorithm has a very good suggestion system backed by billions of search queries to correct for misspellings - using an available API could be worth looking into instead of reinventing the wheel.
   + Stanford has a toolset for named entity extraction, that could be used on web site pages
 4. R&D whether to start pulling down relationships to assist with queries such as yoga nutrition. https://www.nlm.nih.gov/research/umls/META3_current_relations.html
 5. R&D switching to beautifulsoup and use tf-idf vectorize; create a word bank for each topic.
-6. Scrub the logs - change col headings, search for ###-####, search for \@
-7. Post draft of business plan document for NLM management
 8. Consider capturing IDs for preferred terms for later use? So people can use the wikidata, sparql, etc. connections?
