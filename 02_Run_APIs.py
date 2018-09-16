@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+ -*- coding: utf-8 -*-
 """
 Created on Thu Jun 28 15:33:33 2018
 
@@ -75,9 +74,10 @@ import lxml.html as lh
 from lxml.html import fromstring
 import time
 import os
+import hunspell
 
 # Set working directory
-os.chdir('/Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-')
+
 
 
 localDir = ''
@@ -265,10 +265,8 @@ port=443): Max retries exceeded with url:
 Later, run 6 and 7
 '''
 
-
-for index, row in listToCheck1.iterrows():
-    currLogTerm = row['adjustedQueryCase']
-    # === Get 'preferred term' and its concept identifier (CUI/UI) =========
+def getStuffFromAPI(currLogTerm): #Fetch from API
+# === Get 'preferred term' and its concept identifier (CUI/UI) =========
     stTicket = requests.post(todaysTgt, data = {'service':'http://umlsks.nlm.nih.gov'}) # Get single-use Service Ticket (ST)
     # Example: GET https://uts-ws.nlm.nih.gov/rest/search/current?string=tylenol&sabs=MSH&ticket=ST-681163-bDfgQz5vKe2DJXvI4Snm-cas
     tQuery = {'string':currLogTerm, 'searchType':'normalizedString', 'ticket':stTicket.text} # removed 'sabs':'MSH',
@@ -276,31 +274,61 @@ for index, row in listToCheck1.iterrows():
     getPrefTerm.encoding = 'utf-8'
     tItems  = json.loads(getPrefTerm.text)
     tJson = tItems["result"]
+    return tJson
+
+def getSemanticType(currUi): #Send Stuff to the API
+# === Get 'semantic type' =========
+    stTicket = requests.post(todaysTgt, data = {'service':'http://umlsks.nlm.nih.gov'}) # Get single-use Service Ticket (ST)
+    # Example: GET https://uts-ws.nlm.nih.gov/rest/content/current/CUI/C0699142?ticket=ST-512564-vUxzyI00ErMRm6tjefNP-cas
+    semQuery = {'ticket':stTicket.text}
+    getPrefTerm = requests.get(semUri+currUi, params=semQuery)
+    getPrefTerm.encoding = 'utf-8'
+    semItems  = json.loads(getPrefTerm.text)
+    semJson = semItems["result"]
+    currSemTypes = []
+    for name in semJson["semanticTypes"]:
+        currSemTypes.append(name["name"]) #  + " ; "
+    return currSemTypes
+
+def postToDataFrame(currSemTypes, currPrefTerm, currLogTerm):
+ # === Post to dataframe =========
+    apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
+                                               'preferredTerm': currPrefTerm,
+                                               'SemanticTypeName': currSemTypes}), ignore_index=True)
+    return apiGetNormalizedString
+
+#initialize spellchecker
+bj = hunspell.HunSpell('/home/ubuntu/umls/sortedvocab.txt.dic', '/home/ubuntu/umls/sortedvocab.txt.aff')
+for index, row in listToCheck1.iterrows():
+    currLogTerm = row['adjustedQueryCase']
+    tJson = getStufffromAPI(currLogTerm)
     if tJson["results"][0]["ui"] != "NONE": # Sub-loop to resolve "NONE"
         currUi = tJson["results"][0]["ui"]
         currPrefTerm = tJson["results"][0]["name"]
-        # === Get 'semantic type' =========
-        stTicket = requests.post(todaysTgt, data = {'service':'http://umlsks.nlm.nih.gov'}) # Get single-use Service Ticket (ST)
-        # Example: GET https://uts-ws.nlm.nih.gov/rest/content/current/CUI/C0699142?ticket=ST-512564-vUxzyI00ErMRm6tjefNP-cas
-        semQuery = {'ticket':stTicket.text}
-        getPrefTerm = requests.get(semUri+currUi, params=semQuery)
-        getPrefTerm.encoding = 'utf-8'
-        semItems  = json.loads(getPrefTerm.text)
-        semJson = semItems["result"]
-        currSemTypes = []
-        for name in semJson["semanticTypes"]:
-            currSemTypes.append(name["name"]) #  + " ; "
+          
+        currSemTypes = getSemanticTypes(currUi)
         # === Post to dataframe =========
-        apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
-                                                       'preferredTerm': currPrefTerm,
-                                                       'SemanticTypeName': currSemTypes}), ignore_index=True)
+        apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm)
         print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
         # time.sleep(.06)
     else:
-       # Post "NONE" to database and restart loop
-        apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm, 'preferredTerm': "NONE"}, index=[0]), ignore_index=True)
-        print('{} --> NONE'.format(currLogTerm, )) # Write progress to console
-        # time.sleep(.06)
+        bj.suggest(currLogTerm):
+        suggestion = bj.suggest(currLogTerm)
+        currLogTerm = suggestion[0]
+        tJson = getStufffFromAPI(currLogTerm)
+        if tJson["results"][0]["ui"] != "NONE":
+            currUi = tJson["results"][0]["ui"]
+            currPrefTerm = tJson["results"][0]["name"]
+
+            currSemTypes = getSemanticTypes(currUi)
+            # === Post to dataframe =========
+            apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm)
+            print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
+        else
+	    # Post "NONE" to database and restart loop
+            apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm, 'preferredTerm': "NONE"}, index=[0]), ignore_index=True)
+            print('{} --> NONE'.format(currLogTerm, )) # Write progress to console
+            # time.sleep(.06)
 print ("* Done *")
 
 
