@@ -39,6 +39,8 @@ At the highest level, there are 15 Semantic Groups that cover all of health-medi
 The product is based on C libraries so before it can be called in Python the libraries must be available on the local machine.
 To begin, clone into the repo at https://github.com/hunspell/hunspell/blob/master/README.md and then follow the instructions for your operating system.
 
+After that is finished, install pyhunspell using pip.
+
 
 ## Using the Hunspell Spellchecker
 
