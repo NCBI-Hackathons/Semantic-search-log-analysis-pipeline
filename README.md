@@ -44,7 +44,11 @@ To begin, clone into the repo at https://github.com/hunspell/hunspell/blob/maste
 
 The hunspell spellchecker software is required for checking the spelling of search terms that are not accepted by the UMLS API the first time around. 
 
-The repo includes all the tools to make new dictionaries whenever the SPECIALIST LEXICON is updated.
+The repo includes all the tools to make new dictionaries whenever the SPECIALIST LEXICON is updated. Specifically the affixcompress tool in the src/tools folder. To use the tool, get a list of all the words you want to use sort them, and then run the tool on the list. Note, should only be done within languages as the dictionary creator does seem to derive rules from the words. You can specify more than one set of dictionaries to be used at a time, if you wish.
+
+In the 02_Run_API.py file, under the #Initialize spellchecker is where the .aff and .dic files you create should be listed. More than one set of dictionaries can be listed, I believe.
+
+
 
 
 ## Workflow
