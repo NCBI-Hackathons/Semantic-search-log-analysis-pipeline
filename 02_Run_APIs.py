@@ -1,4 +1,5 @@
- -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+#-*- coding: utf-8 -*-
 """
 Created on Thu Jun 28 15:33:33 2018
 
@@ -290,7 +291,7 @@ def getSemanticType(currUi): #Send Stuff to the API
         currSemTypes.append(name["name"]) #  + " ; "
     return currSemTypes
 
-def postToDataFrame(currSemTypes, currPrefTerm, currLogTerm):
+def postToDataFrame(currSemTypes, currPrefTerm, currLogTerm,apiGetNormalizedString):
  # === Post to dataframe =========
     apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm,
                                                'preferredTerm': currPrefTerm,
@@ -301,30 +302,30 @@ def postToDataFrame(currSemTypes, currPrefTerm, currLogTerm):
 bj = hunspell.HunSpell('/home/ubuntu/umls/sortedvocab.txt.dic', '/home/ubuntu/umls/sortedvocab.txt.aff')
 for index, row in listToCheck1.iterrows():
     currLogTerm = row['adjustedQueryCase']
-    tJson = getStufffromAPI(currLogTerm)
+    tJson = getStuffFromAPI(currLogTerm)
     if tJson["results"][0]["ui"] != "NONE": # Sub-loop to resolve "NONE"
         currUi = tJson["results"][0]["ui"]
         currPrefTerm = tJson["results"][0]["name"]
           
-        currSemTypes = getSemanticTypes(currUi)
+        currSemTypes = getSemanticType(currUi)
         # === Post to dataframe =========
-        apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm)
+        apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm,apiGetNormalizedString)
         print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
         # time.sleep(.06)
     else:
-        bj.suggest(currLogTerm):
+        original = currLogTerm
         suggestion = bj.suggest(currLogTerm)
-        currLogTerm = suggestion[0]
-        tJson = getStufffFromAPI(currLogTerm)
-        if tJson["results"][0]["ui"] != "NONE":
+        if len(suggestion) > 0 and  (suggestion[0] != "["+original):
+            currLogTerm = suggestion[0]
+            tJson = getStuffFromAPI(currLogTerm)
             currUi = tJson["results"][0]["ui"]
             currPrefTerm = tJson["results"][0]["name"]
 
-            currSemTypes = getSemanticTypes(currUi)
+            currSemTypes = getSemanticType(currUi)
             # === Post to dataframe =========
-            apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm)
-            print('{} --> {}'.format(currLogTerm, currSemTypes)) # Write progress to console
-        else
+            apiGetNormalizedString = postToDataFrame(currSemTypes, currPrefTerm, currLogTerm, apiGetNormalizedString)
+            print('{}: {} --> {}'.format(original, currLogTerm, currSemTypes)) # Write progress to console
+        else:
 	    # Post "NONE" to database and restart loop
             apiGetNormalizedString = apiGetNormalizedString.append(pd.DataFrame({'adjustedQueryCase': currLogTerm, 'preferredTerm': "NONE"}, index=[0]), ignore_index=True)
             print('{} --> NONE'.format(currLogTerm, )) # Write progress to console
