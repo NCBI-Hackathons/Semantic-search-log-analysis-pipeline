@@ -80,9 +80,9 @@ import os
 import string
 
 # Set working directory
-os.chdir('Users/johnsonnicl/Desktop/NIHHackathon/Python-app-to-analyze-the-site-search-logs-of-any-health-medical-life-sciences-site-/Users/wendlingd/_webDS')
+os.chdir('Users/johnsonnicl/Desktop/NIHHackathon/Semantic-search-log-analysis-pipeline')
 
-localDir = '01_Text_wrangling_files/'
+localDir = '01_Wrangle_and_match_files/'
 
 '''
 Before running script, copy the following new files to /00 SourceFiles/; 
@@ -91,10 +91,10 @@ one quarter, one year, whatever.
 '''
 
 # What is your new log file named?
-newSearchLogFile = 'week31.xlsx'
+newSearchLogFile = 'week35.xlsx'
 
 # Bring in historical file of (somewhat edited) matches
-GoldStandard = localDir + 'GoldStandard_Master.xlsx'
+GoldStandard = localDir + 'GoldStandard_master.xlsx'
 GoldStandard = pd.read_excel(GoldStandard)
 
 '''
