@@ -69,8 +69,8 @@ adjust names below, as needed.
 '''
 
 # Set working directory and directory to write files to
-os.chdir('/Users/wendlingd/Projects/webDS/_util')
-localDir = '01_Text_wrangling_files/'
+os.chdir('/Users/name/_util')
+localDir = '01_Wrangle_and_match_files'
 
 
 # What is your new log file named?
