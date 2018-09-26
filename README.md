@@ -39,11 +39,11 @@ At the highest level, there are 15 Semantic Groups that cover all of health-medi
 ### Hunspell
 
 The product is based on C libraries so before it can be called in Python the libraries must be available on the local machine.
-To begin, clone into the repo at [this link](https://github.com/hunspell/hunspell "here") https://github.com/hunspell/hunspell/blob/master/README.md and then follow the instructions for your operating system.
+To begin, clone into the repo at [this link](https://github.com/hunspell/hunspell). cd into the directory and then  follow the [instructions](https://github.com/hunspell/hunspell/blob/master/README.md) for your operating system.
 
-If you have a Mac and wouldrather not use Homebrew to install the required packages: find the non-homebrew instructions for installing autoconf, automake, libtool here. Find something similar to install boost and gettext. Then, follow the instructions on the ReadMe page beginning at the “Then run the following commands” section of the Compiling on GNU/Linux and Unixes section (assuming you have a Mac or Linux). One thing they do not say but is assumed in that section is that you should begin doing those instructions while in the directory of the code you just cloned from that repo.
+If you have a Mac and would rather not use Homebrew to install the required packages: find the non-homebrew instructions for installing autoconf, automake, libtool [here](https://superuser.com/questions/383580/how-to-install-autoconf-automake-and-related-tools-on-mac-os-x-from-source). Find something similar to install boost and gettext. Then, follow the instructions on the ReadMe page beginning at the “Then run the following commands” section of the Compiling on GNU/Linux and Unixes section (assuming you have a Mac or Linux). 
 
-After that is finished, install pyhunspell using pip.
+After that is finished, install pyhunspell using pip or, if you prefer conda, use `conda install -c conda-forge hunspell`
 
 
 ## Using the Hunspell Spellchecker
