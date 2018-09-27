@@ -1,6 +1,6 @@
 # Semantic Search Log Analysis Pipeline (SSLAP)
 
-> **Classify web visitor queries to an ontology so you can chart, and respond to, trends in information seeking**
+> **Chart and respond to trends in information seeking, by classifying your web visitor queries to an ontology**
 
 (Code is under revision. Not fully functional.)
 
