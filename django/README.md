@@ -13,6 +13,9 @@ To initialize with the 'gold standard' file, run:
 * python manage.py loaddata assignments.json
 * python manage.py runserver
 
+Spyder editor users: In IPython console, use %run instead of python
+
+Go to http://localhost:8000/fuzzy/
 # Approval Interface
 
 ![Approval Tool](approval_tool.png "Approval Tool")
