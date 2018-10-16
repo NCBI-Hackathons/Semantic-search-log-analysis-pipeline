@@ -69,10 +69,9 @@ Whole-project view. We do not have a deployable software package at this time; t
 ## Future Directions
 
 1. Collapse SPECIALIST LEXICON into a dictionary to be ingested by Hunspell to create better spellchecking to match with search terms.
-2. For matching that won't be in UMLS, spider whole website, clustering by text body instead of only the title/metadatheadings. (tf-idf)
+2. For matching of the web content that won't be findable in UMLS, spider whole website and cluster by text body, instead of only matching the titles/metadata headings. R&D switching to beautifulsoup and using tf-idf vectorize; create a word bank for each topic.
 3. Other NLP Toolset Integrations: 
   + Google's search algorithm has a very good suggestion system backed by billions of search queries to correct for misspellings - using an available API could be worth looking into instead of reinventing the wheel.
   + Stanford has a toolset for named entity extraction, that could be used on web site pages
 4. R&D whether to start pulling down relationships to assist with queries such as yoga nutrition. https://www.nlm.nih.gov/research/umls/META3_current_relations.html
-5. R&D switching to beautifulsoup and use tf-idf vectorize; create a word bank for each topic.
-8. Consider capturing IDs for preferred terms for later use? So people can use the wikidata, sparql, etc. connections?
+5. Consider capturing IDs for preferred terms for later use? So people can use the wikidata, sparql, etc. connections?
