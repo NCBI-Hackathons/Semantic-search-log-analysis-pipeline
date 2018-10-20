@@ -5,31 +5,25 @@ Created on Sat Jul  7 10:44:31 2018
 
 @authors: dan.wendling@nih.gov, 
 
-Last modified: 2018-10-15
+Last modified: 2018-10-20
 
 ** Site-search log file analyzer, Part 3 **
 
-CODE IS INCOMPLETE for the manual matching UI
-
 This script: Automatically update "high-confidence guesses," then use 
-Django UI to build the "training data" for machine learning by making
-selections manually.
+Django UI to build training data for machine learning, by making manual
+selections for your higher-frequency queries.
 
-Matches such as proper names, acronyms, etc., will not be in UMLS, but 
-can be fed into the 01 files over time. This step helps the system
-get better over time; high-confidence corrections are automatic, but should
+Matches such as proper names, acronyms, and other "named entities" will 
+not be in UMLS, but can be fed into the 01 files HighConfidenceGuesses.xlsx and 
+QuirkyMatches.xlsx over time. This step helps the system get better over 
+time; high-confidence corrections are automatic, but should
 be checked occasionally, and lower-confidence matches need to be manually
-inspected. Two Django pages and a sqlite database assist with this.
+inspected; for the second, two Django pages and a sqlite database assist.
 
-Python's FuzzyWuzzy was written for single inputs to a web form; I, however, 
-am using it to compare one dataframe column to another dataframe's column. 
-Takes a lot to match the tokenized function output back 
+Python's FuzzyWuzzy was written for single inputs to a web form; here, however, 
+we use it to compare one dataframe column to another dataframe's column. 
+Takes extra lines of code to match the tokenized function output back 
 to the original untokenized term, which is necessary for this work.
-
-Fuzzy match can be applied to an entire column of dataset_1 to return the 
-best score against the column of dataset_2.
-
-For more options see temp_FuzzyWuzzyHowTo.py.
 
 
 ----------------
@@ -39,12 +33,26 @@ SCRIPT CONTENTS
 1. Start-up / What to put into place, where
 2. FuzzyAutoAdd - When phrase-match score is 90 or higher, assign without checking
 3. FuzzyWuzzyListToCheck - Set up manual matching UI
-4. Add result to SQLite, process at http://localhost:5000/fuzzy/
-   (Use browser to update SQLite table)
-5. Bring data from manual_assignments back into Pandas
-6. Update log and GoldStandard with new matches from MySQL
-7. Create new 'uniques' dataframe/file for ML
-8. Next steps
+4. Add result to SQLite
+5. Process results in browser using http://localhost:5000/fuzzy/
+6. Update QuirkyMatches and log from manual_assignments table
+7. Create new 'uniques' dataframe from log
+
+
+-----------
+REFERENCES
+-----------
+FuzzyWuzzy
+    - https://pypi.org/project/fuzzywuzzy/
+    - https://www.neudesic.com/blog/fuzzywuzzy-using-python/
+    - http://jonathansoma.com/lede/algorithms-2017/classes/fuzziness-matplotlib/fuzzing-matching-in-pandas-with-fuzzywuzzy/
+SQLite
+    - https://docs.python.org/2/library/sqlite3.html
+    - http://www.sqlitetutorial.net/sqlite-python/
+        - http://www.sqlitetutorial.net/sqlite-python/creating-database/
+        - http://www.sqlitetutorial.net/sqlite-replace-statement/
+        - http://www.sqlitetutorial.net/sqlite-python/update/
+    - Python-SQLite code below, but DB Browser for SQLite was also used - http://sqlitebrowser.org/
 """
 
 
@@ -75,6 +83,7 @@ dbDir = '_django/loganalysis/'
 GoldStandard = pd.read_excel('01_Import-transform_files/GoldStandard_master.xlsx')
 
 
+
 #%%
 # ===========================================================
 # 2. FuzzyAutoAdd - When phrase-match score is 90 or higher, 
@@ -96,13 +105,6 @@ FuzzyWuzzyResults - What the results of this function mean:
 Re-start:
 listOfUniqueUnassignedAfterUmls11 = pd.read_excel('02_Run_APIs_files/listOfUniqueUnassignedAfterUmls11.xlsx')
 GoldStandard = pd.read_excel('01_Import-transform_files/GoldStandard_master.xlsx')
-
------------
-REFERENCES
------------
-- https://pypi.org/project/fuzzywuzzy/
-- https://www.neudesic.com/blog/fuzzywuzzy-using-python/
-- http://jonathansoma.com/lede/algorithms-2017/classes/fuzziness-matplotlib/fuzzing-matching-in-pandas-with-fuzzywuzzy/
 '''
 
 listOfUniqueUnassignedAfterUmls = pd.read_excel('02_Run_APIs_files/listOfUniqueUnassignedAfterUmls.xlsx')
@@ -179,18 +181,18 @@ FuzzyAutoAdd4 = FuzzyAutoAdd4.rename(columns={'adjustedQueryCase_x': 'adjustedQu
 
 
 # --------------------------------------
-# Add new entries to HighQualityGuesses
+# Add new entries to HighConfidenceGuesses
 # --------------------------------------
 
 # Open file from phase 1
-HighQualityGuesses = pd.read_excel('01_Import-transform_files/HighConfidenceGuesses.xlsx')
+HighConfidenceGuesses = pd.read_excel('01_Import-transform_files/HighConfidenceGuesses.xlsx')
 
 # Append new data
-HighQualityGuesses = HighQualityGuesses.append('FuzzyAutoAdd4', sort=True)
+HighConfidenceGuesses = HighConfidenceGuesses.append('FuzzyAutoAdd4', sort=True)
 
 # Write out for future phase 1's
 writer = pd.ExcelWriter('01_Import-transform_files/HighConfidenceGuesses.xlsx')
-FuzzyAutoAdd4.to_excel(writer,'logAfterUmlsApi')
+HighConfidenceGuesses.to_excel(writer,'HighConfidenceGuesses')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
 
@@ -425,44 +427,42 @@ writer.save()
 
 #%%
 # =================================================================
-# 4. Add result to SQLite, process at http://localhost:5000/fuzzy/
+# 4. Add result to SQLite
 # =================================================================
 '''
-https://docs.python.org/2/library/sqlite3.html
+# FIXME - Arranged to solve problems with Django UI; update this when possible.
 
-http://www.sqlitetutorial.net/sqlite-python/creating-database/
+Assumes this path and name on disk; update accordingly
+/Users/user/Projects/webDS/_util/_django/loganalysis/db.sqlite3
+    
+Re-starting?
+FuzzyWuzzyProcResult4 = pd.read_excel(dbDir + 'importManualAssignments.xlsx')
+'''
 
-Database: /Users/user/Projects/webDS/_util/_django/loganalysis/db.sqlite3
+# Set working directory
+os.chdir('/Users/user/Projects/webDS/_util/_django/loganalysis')
 
-CREATE TABLE "manual_assignments" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "adjustedQueryCase" varchar(200) NULL, "NewSemanticTypeName" varchar(100) NULL, "preferredTerm" varchar(200) NULL, "FuzzyToken" varchar(50) NULL, "SemanticTypeName" varchar(100) NULL, "SemanticGroup" varchar(50) NULL, "timesSearched" integer NULL, "FuzzyScore" integer NULL, "Modified" integer NULL)
-
-MySQL version was:
-CREATE TABLE `manual_assignments` (
-  `assignment_id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `adjustedQueryCase` varchar(200) NULL,
-  `NewSemanticTypeName` varchar(100) NULL,
-  `preferredTerm` varchar(200) NULL,
-  `FuzzyToken` varchar(50) NULL,
-  `SemanticTypeName` varchar(100) NULL,
-  `SemanticGroup` varchar(50) NULL,
-  `timesSearched` int(11) NULL,
-  `FuzzyScore` int(11) NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
------------
-REFERENCES
------------
-- https://docs.python.org/2/library/sqlite3.html
-- http://www.sqlitetutorial.net/sqlite-python/
-    - http://www.sqlitetutorial.net/sqlite-python/creating-database/
-    - http://www.sqlitetutorial.net/sqlite-replace-statement/
-    - http://www.sqlitetutorial.net/sqlite-python/update/
-- Python-SQLite code below, but DB Browser for SQLite was also used - http://sqlitebrowser.org/
-
-Re-start?
 FuzzyWuzzyProcResult4 = pd.read_excel('importManualAssignments.xlsx')
 
+# Add additional cols or SQLite will change the schema
+FuzzyWuzzyProcResult4['NewSemanticTypeName'] = ""
+FuzzyWuzzyProcResult4['SemanticGroup'] = ""
+FuzzyWuzzyProcResult4['Modified'] = 0
+
+# FIXME - Problem with Django; fix there and remove this workaround
+# FIXME - Reset index and name column assignment_id.;
+FuzzyWuzzyProcResult4.rename(columns={'ProbablyMeantGSTerm': 'FuzzyToken'}, inplace=True)
+# FuzzyWuzzyProcResult4 = FuzzyWuzzyProcResult4.reset_index()
+# FuzzyWuzzyProcResult4.rename(columns={'index': 'id'}, inplace=True)
+
 '''
+In DB Browser for SQLite:
+    
+DROP TABLE IF EXISTS manual_assignments;
+VACUUM;
+CREATE TABLE `manual_assignments` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `adjustedQueryCase` TEXT, `preferredTerm` TEXT, `FuzzyToken` TEXT, `SemanticTypeName` TEXT, `timesSearched` INTEGER, `FuzzyScore` INTEGER, `NewSemanticTypeName` TEXT, `SemanticGroup` TEXT, `Modified` INTEGER);
+'''
+
 
 # import pandas as pd
 import sqlite3
@@ -472,100 +472,17 @@ from pandas.io import sql
 from sqlalchemy import create_engine
 # import mysql.connector
 
-# Set working directory
-os.chdir('/Users/user/Projects/webDS/_util/_django/loganalysis')
-
-
-# ----------------------------------------------------
-# Get SQLite database going
-# ----------------------------------------------------
-'''
-Recommendation: If you're using both DB Browser for SQLite and this at the 
-same time, close DB Browser if you get "OperationalError: database is locked"
-Or try using conn.close() here.
-'''
-
 # Open or re-open the database connection
 conn = sqlite3.connect("db.sqlite3") # opens sqlite and a database file
 myCursor = conn.cursor() # provides a connection to the database
 
-# Test the connection
-myCursor.execute("SELECT adjustedQueryCase, timesSearched FROM `manual_assignments` limit 10;", conn)
-top10 = myCursor.fetchall()
-print("\n\nTop 10 by timesSearched:\n {}".format(top10))
-
-'''
-CREATE statement from DB Browser from SQLite:
-    CREATE TABLE "manual_assignments" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "adjustedQueryCase" varchar(200) NULL, "NewSemanticTypeName" varchar(100) NULL, "preferredTerm" varchar(200) NULL, "FuzzyToken" varchar(50) NULL, "SemanticTypeName" varchar(100) NULL, "SemanticGroup" varchar(50) NULL, "timesSearched" integer NULL, "FuzzyScore" integer NULL, "Modified" integer NULL)
-    
-# To create a table from scratch; may not work.
-http://www.sqlitetutorial.net/sqlite-create-table/
-myCursor.execute("CREATE TABLE "manual_assignments" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "adjustedQueryCase" varchar(200) NULL, "NewSemanticTypeName" varchar(100) NULL, "preferredTerm" varchar(200) NULL, "FuzzyToken" varchar(50) NULL, "SemanticTypeName" varchar(100) NULL, "SemanticGroup" varchar(50) NULL, "timesSearched" integer NULL, "FuzzyScore" integer NULL, "Modified" integer NULL)")
-'''
-
-FuzzyWuzzyProcResult4.columns
-'''
-'adjustedQueryCase', 'preferredTerm', 'ProbablyMeantGSTerm',
-       'SemanticTypeName', 'timesSearched', 'FuzzyScore'
-       ProbablyMeantGSTerm = FuzzyToken
-'''
-
-# FIXME - Problem with Django; fix there and remove this workaround
-# FIXME - Reset index and name column assignment_id.;
-FuzzyWuzzyProcResult4.rename(columns={'ProbablyMeantGSTerm': 'FuzzyToken'}, inplace=True)
-FuzzyWuzzyProcResult4 = FuzzyWuzzyProcResult4.reset_index()
-FuzzyWuzzyProcResult4.rename(columns={'index': 'id'}, inplace=True)
-
-
-'''
-FIXME - Ended up running these 3 commands in DB Browser for SQLite; something wrong.
-
-DROP TABLE IF EXISTS manual_assignments;
-VACUUM;
-CREATE TABLE `manual_assignments` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `adjustedQueryCase` TEXT, `preferredTerm` TEXT, `FuzzyToken` TEXT, `SemanticTypeName` TEXT, `timesSearched` INTEGER, `FuzzyScore` INTEGER, `NewSemanticTypeName` TEXT, `SemanticGroup` TEXT, `Modified` INTEGER);
-'''
-
-myCursor.execute("DROP TABLE IF EXISTS manual_assignments;")
-conn.commit()
-
-myCursor.execute("VACUUM;")
-conn.commit()
-
-myCursor.execute("CREATE TABLE `manual_assignments` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT, `adjustedQueryCase` TEXT, `preferredTerm` TEXT, `FuzzyToken` TEXT, `SemanticTypeName` TEXT, `timesSearched` INTEGER, `FuzzyScore` INTEGER, `NewSemanticTypeName` TEXT, `SemanticGroup` TEXT, `Modified` INTEGER);")
-conn.commit()
-
-
-# ---------------------------------------------
-# Move df FuzzyWuzzyProcResult4 df into SQLite
-# ---------------------------------------------
-
-# Add additional cols or SQLite will change schema
-FuzzyWuzzyProcResult4['NewSemanticTypeName'] = ""
-FuzzyWuzzyProcResult4['SemanticGroup'] = ""
-FuzzyWuzzyProcResult4['Modified'] = ""
-
 # Replace old data with new
-FuzzyWuzzyProcResult4.to_sql("manual_assignments", conn, if_exists="replace")
+FuzzyWuzzyProcResult4.to_sql("manual_assignments", conn, if_exists="replace", index_label='id')
 
 # Did it work?
 myCursor.execute("SELECT adjustedQueryCase, timesSearched FROM `manual_assignments` limit 10;")
 top10 = myCursor.fetchall()
 print("\n\nTop 10 by timesSearched:\n {}".format(top10))
-
-'''
-Alternatives...
-
-myCursor.execute('SELECT adjustedQueryCase, timesSearched FROM `manual_assignments` limit 10;')
-top10 = myCursor.fetchall()
-print("\n\nTop 10 by timesSearched:\n {}".format(top10))
-
-
-for arow in FuzzyWuzzyProcResult4:
-    if arow[0].value == "code": continue
-    theValues = (int(arow[0].value),arow[1].value)
-    myCursor.execute("INSERT INTO 'accident_severity' VALUES (?,?) ",theValues)
-'''
-
 
 # To close the connection. I open and close this when switching between Python
 # and DB Browser for SQLite.
@@ -573,90 +490,127 @@ conn.close()
 
 
 #%%
+# ========================================================================
+# 5. Process results in browser using http://localhost:5000/fuzzy/
+#    (Use browser to update SQLite table)
+# ========================================================================
+'''
+From terminal:
+    
+cd /Users/user/Projects/webDS/_util/_django/loganalysis
+    
+python manage.py runserver
 
+Open http://localhost:5000/fuzzy/ in browser.
 
+Solve top searches as best you can.
 
+Do what you have time for, but don't waste too much time on inconsequential
+entries.
 
-# FIXME - the rest of the app requires work!
+Then review in http://localhost:8000/fuzzy/fuzzyVetter. 
 
-
-
-
+This will assign Modifed = 1 on the entries you approve.
+'''
 
 
 #%%
-# ========================================================================
-# 5. Bring data from manual_assignments back into Pandas
-# ========================================================================
+# ===============================================================
+# 6. Update QuirkyMatches and log, from manual_assignments table
+# ===============================================================
 '''
 Assign SemanticGroup from GoldStandard or other.
 
+FYI, the columns in the database:
+    'id', 'adjustedQueryCase', 'preferredTerm', 'FuzzyToken',
+       'SemanticTypeName', 'timesSearched', 'FuzzyScore',
+       'NewSemanticTypeName', 'SemanticGroup', 'Modified'
 '''
+import sqlite3
+from pandas.io import sql
+from sqlite3 import Error
+from pandas.io import sql
+from sqlalchemy import create_engine
+
+# Set working directory for SQLite
+os.chdir('/Users/user/Projects/webDS/_util/_django/loganalysis')
+
+# Open or re-open the database connection
+conn = sqlite3.connect("db.sqlite3") # opens sqlite and a database file
+myCursor = conn.cursor() # provides a connection to the database
+
+newManualMatches = pd.read_sql_query("select adjustedQueryCase, preferredTerm, SemanticTypeName from manual_assignments where Modified = 1;", conn)
+
+# To close the connection. I open and close this when switching between Python
+# and DB Browser for SQLite.
+conn.close()
+
+# Good idea to read this table while you're in "building" phase, remove null cols, content problems
+# newManualMatches.drop(2, inplace=True)
 
 
+# --------------------------
+# Update QuirkyMatches.xlsx
+# --------------------------
 
-#%%
-# ========================================================================
-# 6. Update log and GoldStandard with new matches from MySQL
-# ========================================================================
-'''
-Move clean-up work into browser.
+# Reset working directory now that we're done with Django
+os.chdir('/Users/user/Projects/webDS/_util')
 
-delete from manual_assignments
-where NewSemanticTypeName like 'Ignore'
+# Open QuirkyMatches from phase 1
+QuirkyMatches = pd.read_excel('01_Import-transform_files/QuirkyMatches.xlsx')
 
-Re-start:
-logAfterUmlsApi1 = pd.read_excel('02_Run_APIs_files/logAfterUmlsApi1.xlsx')
-'''
-
-logAfterUmlsApi1 = pd.read_excel('02_Run_APIs_files/logAfterUmlsApi1.xlsx')
-
-
-# Apply to log file
-logAfterFuzzyMatch = pd.merge(logAfterUmlsApi1, FuzAssigned2, how='left', on='adjustedQueryCase')
-
-# Future: Look for a better way to do the above - MERGE WITH CONDITIONAL OVERWRITE. Temporary fix:
-logAfterFuzzyMatch['preferredTerm2'] = logAfterFuzzyMatch['preferredTerm_x'].where(logAfterFuzzyMatch['preferredTerm_x'].notnull(), logAfterFuzzyMatch['preferredTerm_y'])
-logAfterFuzzyMatch['SemanticTypeName2'] = logAfterFuzzyMatch['SemanticTypeName_x'].where(logAfterFuzzyMatch['SemanticTypeName_x'].notnull(), logAfterFuzzyMatch['SemanticTypeName_y'])
-logAfterFuzzyMatch['SemanticGroupCode2'] = logAfterFuzzyMatch['SemanticGroupCode_x'].where(logAfterFuzzyMatch['SemanticGroupCode_x'].notnull(), logAfterFuzzyMatch['SemanticGroupCode_y'])
-logAfterFuzzyMatch['SemanticGroup2'] = logAfterFuzzyMatch['SemanticGroup_x'].where(logAfterFuzzyMatch['SemanticGroup_x'].notnull(), logAfterFuzzyMatch['SemanticGroup_y'])
-logAfterFuzzyMatch['BranchPosition2'] = logAfterFuzzyMatch['BranchPosition_x'].where(logAfterFuzzyMatch['BranchPosition_x'].notnull(), logAfterFuzzyMatch['BranchPosition_y'])
-logAfterFuzzyMatch['CustomTreeNumber2'] = logAfterFuzzyMatch['CustomTreeNumber_x'].where(logAfterFuzzyMatch['CustomTreeNumber_x'].notnull(), logAfterFuzzyMatch['CustomTreeNumber_y'])
-logAfterFuzzyMatch.drop(['preferredTerm_x', 'preferredTerm_y',
-                          'SemanticTypeName_x', 'SemanticTypeName_y',
-                          'SemanticGroup_x', 'SemanticGroup_y',
-                          'SemanticGroupCode_x', 'SemanticGroupCode_y',
-                          'BranchPosition_x', 'BranchPosition_y', 
-                          'CustomTreeNumber_x', 'CustomTreeNumber_y'], axis=1, inplace=True)
-logAfterFuzzyMatch.rename(columns={'preferredTerm2': 'preferredTerm',
-                                    'SemanticTypeName2': 'SemanticTypeName',
-                                    'SemanticGroup2': 'SemanticGroup',
-                                    'SemanticGroupCode2': 'SemanticGroupCode',
-                                    'BranchPosition2': 'BranchPosition',
-                                    'CustomTreeNumber2': 'CustomTreeNumber'
-                                    }, inplace=True)
-
-
-# FIXME - Why are duplicate rows introduced?
-logAfterFuzzyMatch = logAfterFuzzyMatch.drop_duplicates()
-
-
-# Save to file so you can open in future sessions, if needed
-writer = pd.ExcelWriter(localDir + 'logAfterFuzzyMatch.xlsx')
-logAfterFuzzyMatch.to_excel(writer,'logAfterFuzzyMatch')
+# Write out for future matching
+writer = pd.ExcelWriter('01_Import-transform_files/QuirkyMatches.xlsx')
+newManualMatches.to_excel(writer,'QuirkyMatches')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
 
 
+# ------------------
+# Update search log
+# ------------------
 
-# ---------------------------------------
-# Visualize results - logAfterFuzzyMatch
-# ---------------------------------------
-    
+# Bring in if not already open
+logAfterFuzzy1 = pd.read_excel(localDir + 'logAfterFuzzy1.xlsx')
+
+# Join new adds to the current search log master
+logAfterFuzzy2 = pd.merge(logAfterFuzzy1, newManualMatches, how='left', on='adjustedQueryCase')
+
+logAfterFuzzy2.columns
+'''
+'Referrer', 'Query', 'Timestamp', 'adjustedQueryCase',
+       'preferredTerm_x', 'SemanticTypeName_x', 'preferredTerm_y',
+       'SemanticTypeName_y'
+'''
+
+# Future: Look for a better way to do the above - MERGE WITH CONDITIONAL OVERWRITE. Temporary fix:
+logAfterFuzzy2['preferredTerm2'] = logAfterFuzzy2['preferredTerm_x'].where(logAfterFuzzy2['preferredTerm_x'].notnull(), logAfterFuzzy2['preferredTerm_y'])
+logAfterFuzzy2['SemanticTypeName2'] = logAfterFuzzy2['SemanticTypeName_x'].where(logAfterFuzzy2['SemanticTypeName_x'].notnull(), logAfterFuzzy2['SemanticTypeName_y'])
+logAfterFuzzy2.drop(['preferredTerm_x', 'preferredTerm_y',
+                          'SemanticTypeName_x', 'SemanticTypeName_y'], axis=1, inplace=True)
+logAfterFuzzy2.rename(columns={'preferredTerm2': 'preferredTerm',
+                                    'SemanticTypeName2': 'SemanticTypeName'}, inplace=True)
+
+
+# Re-sort full file
+logAfterFuzzy2 = logAfterFuzzy2.sort_values(by='adjustedQueryCase', ascending=True)
+logAfterFuzzy2 = logAfterFuzzy2.reset_index()
+logAfterFuzzy2.drop(['index'], axis=1, inplace=True)
+
+# Save to file so you can open in future sessions, if needed
+writer = pd.ExcelWriter(localDir + 'logAfterFuzzy2.xlsx')
+logAfterFuzzy2.to_excel(writer,'logAfterFuzzy2')
+# df2.to_excel(writer,'Sheet2')
+writer.save()
+
+
+# ------------------------------------
+# Visualize results - logAfterFuzzy2
+# ------------------------------------
+
 # Pie for percentage of rows assigned; https://pythonspot.com/matplotlib-pie-chart/
-totCount = len(logAfterFuzzyMatch)
-unassigned = logAfterFuzzyMatch['SemanticGroup'].isnull().sum()
-# unassigned = logAfterFuzzyMatch.loc[logAfterFuzzyMatch['preferredTerm'].str.contains('Unparsed') == True]
+totCount = len(logAfterFuzzy2)
+unassigned = logAfterFuzzy2['preferredTerm'].isnull().sum()
 assigned = totCount - unassigned
 labels = ['Assigned', 'Unassigned']
 sizes = [assigned, unassigned]
@@ -665,72 +619,42 @@ explode = (0.1, 0)  # explode 1st slice
 plt.pie(sizes, explode=explode, labels=labels, colors=colors,
         autopct='%1.f%%', shadow=False, startangle=100)
 plt.axis('equal')
-plt.title("Status after 'fuzzy match' processing - \n{} queries with {} unassigned".format(totCount, unassigned))
+plt.title("Status after 'UMLS API' processing - \n{} queries with {} unassigned".format(totCount, unassigned))
 plt.show()
 
 
-# Bar of SemanticGroup categories, horizontal
+# Bar of SemanticTypeName categories, horizontal
 # Source: http://robertmitchellv.com/blog-bar-chart-annotations-pandas-mpl.html
-ax = logAfterFuzzyMatch['SemanticGroup'].value_counts().plot(kind='barh', figsize=(10,6),
+ax = logAfterFuzzy2['SemanticTypeName'].value_counts()[:20].plot(kind='barh', figsize=(10,6),
                                                  color="slateblue", fontsize=10);
 ax.set_alpha(0.8)
-ax.set_title("Categories assigned after 'fuzzy match' processing with {} of {} unassigned".format(unassigned, totCount), fontsize=14)
+ax.set_title("Categories assigned after 'UMLS API' processing with {} of {} unassigned".format(unassigned, totCount), fontsize=14)
 ax.set_xlabel("Number of searches", fontsize=9);
 # set individual bar lables using above list
 for i in ax.patches:
     # get_width pulls left or right; get_y pushes up or down
     ax.text(i.get_width()+.1, i.get_y()+.31, \
             str(round((i.get_width()), 2)), fontsize=9, color='dimgrey')
-# invert for largest on top 
+# invert for largest on top
 ax.invert_yaxis()
 plt.gcf().subplots_adjust(left=0.3)
 
 
 #%%
-# =========================================================================
-# 7. Create new 'uniques' dataframe/file for ML
-# =========================================================================
-'''
-Won't require Excel file if you run the df from here. File will have 
-updated entries from this session, by pulling back GoldStandard. Also will
-make sure that previously found preferredTerm will be available as if they 
-were queries. To get maximum utility from the API.
+# ===========================================
+# 7. Create new 'uniques' dataframe from log
+# listOfUniqueUnassignedAfterFuzzy2
+# ===========================================
 
-Training file: ApiAssignedSearches.xlsx (successful matches)
-Unmatched terms we want to predict for: search-seed_the_ML.xlsx
+# Unique queries with no assignments
+listOfUniqueUnassignedAfterFuzzy2 = logAfterFuzzy2[pd.isnull(logAfterFuzzy2['preferredTerm'])]
+listOfUniqueUnassignedAfterFuzzy2 = listOfUniqueUnassignedAfterFuzzy2.groupby('adjustedQueryCase').size()
+listOfUniqueUnassignedAfterFuzzy2 = pd.DataFrame({'timesSearched':listOfUniqueUnassignedAfterFuzzy2})
+listOfUniqueUnassignedAfterFuzzy2 = listOfUniqueUnassignedAfterFuzzy2.sort_values(by='timesSearched', ascending=False)
+listOfUniqueUnassignedAfterFuzzy2 = listOfUniqueUnassignedAfterFuzzy2.reset_index()
 
-GoldStandard = pd.read_excel('01_Import-transform_files/GoldStandard_master.xlsx')
-'''
-
-
-# Base on UPDATED (above) GoldStandard
-ApiAssignedSearches = GoldStandard
-
-col = ['adjustedQueryCase', 'preferredTerm', 'SemanticTypeName']
-ApiAssignedSearches = ApiAssignedSearches[col]
-
-'''
-get all preferredTerm items, dupe this into adjustedQueryCase column (so both 
-columns are the same, i.e, preferredTerm is also available as if it were 
-raw input; append to df, de-dedupe rows.
-'''
-
-prefGrabber = ApiAssignedSearches.drop(['adjustedQueryCase'], axis=1) # drop col
-prefGrabber.drop_duplicates(inplace=True) # de-dupe rows
-prefGrabber['adjustedQueryCase'] = prefGrabber['preferredTerm'].str.lower()  # dupe and lc
-
-ApiAssignedSearches = ApiAssignedSearches.append(prefGrabber, sort=True) # append to orig
-ApiAssignedSearches.drop_duplicates(inplace=True) # de-dupe rows after append
-
-# FIXME - Some adjustedQueryCase = nan
-ApiAssignedSearches.adjustedQueryCase.fillna(ApiAssignedSearches.preferredTerm, inplace=True)
-ApiAssignedSearches['adjustedQueryCase'].str.lower() # str.lower the nan fixes
-
-# Write this to file
-writer = pd.ExcelWriter(localDir + 'ApiAssignedSearches.xlsx')
-ApiAssignedSearches.to_excel(writer,'ApiAssignedSearches')
+# Send to file to preserve
+writer = pd.ExcelWriter(localDir + 'listOfUniqueUnassignedAfterFuzzy2.xlsx')
+listOfUniqueUnassignedAfterFuzzy2.to_excel(writer,'unassignedToCheck')
 writer.save()
 
-
-# REMOVE
-# Most variables but NOT ApiAssignedSearches
