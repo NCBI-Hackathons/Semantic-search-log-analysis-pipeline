@@ -5,7 +5,7 @@ Created on Wed Jun 27 09:20:01 2018
 
 @authors: dan.wendling@nih.gov, 
 
-Last modified: 2018-10-15
+Last modified: 2018-10-20
 
 ** Site-search log file analyzer, Part 1 **
 
@@ -23,8 +23,9 @@ SCRIPT CONTENTS
 5. Separate out the queries with non-English characters
 6. Make special-case assignments with F&R, RegEx: Bibliographic, Numeric, Named entities
 7. Create logAfterGoldStandard - Match to the "gold standard" file of historical matches
-8. Apply matches in HighConfidenceGuesses.xlsx
-9. Create 'uniques' dataframe/file for APIs
+8. Apply matches from HighConfidenceGuesses.xlsx
+9. Apply matches from QuirkyMatches.xlsx
+10. Create 'uniques' dataframe/file for APIs
 
 
 -----------
@@ -59,7 +60,6 @@ Search Timestamp - When the query was run
 I import Excel because my source breaks CSV rows in export when the query 
 has commas.
 '''
-
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -310,7 +310,7 @@ searchLogClean = nonForeign
 # 6. Make special-case assignments with F&R, RegEx: Bibliographic, Numeric, Named entities
 # =========================================================================================
 '''
-Later procedures can't match the below very well.
+Later procedures can't match the below very well, so match them here.
 '''
 
 # --- pmresources.html; outlier in site; if you want special handling... ---
@@ -407,9 +407,9 @@ logAfterGoldStandard.rename(columns={'preferredTerm2': 'preferredTerm',
 
 
 #%%
-# ===============================================
-# 8. Apply matches in HighConfidenceGuesses.xlsx
-# ===============================================
+# =================================================
+# 8. Apply matches from HighConfidenceGuesses.xlsx
+# =================================================
 '''
 This data comes from fuzzy matching later on; items in here can be proper names,
 misspellings, foreign terms, that Python FuzzyWuzzy scored at 90% or higher - 
@@ -422,14 +422,68 @@ file; these are automatically assigned.
 # Bring in historical file of lightly edited matches
 HighConfidenceGuesses = pd.read_excel(localDir + 'HighConfidenceGuesses.xlsx')
 
-logAfterGoldStandard = pd.merge(searchLogClean, GoldStandard, left_on='adjustedQueryCase', right_on='adjustedQueryCase', how='left')
+logAfterHCGuesses = pd.merge(logAfterGoldStandard, HighConfidenceGuesses, left_on='adjustedQueryCase', right_on='adjustedQueryCase', how='left')
+
+logAfterHCGuesses.columns
+'''
+'Referrer', 'Query', 'Timestamp', 'adjustedQueryCase',
+       'preferredTerm_x', 'SemanticTypeName_x', 'SemanticTypeName_y',
+       'preferredTerm_y'
+'''
+
+# Future: Look for a better way to do the above - MERGE WITH CONDITIONAL OVERWRITE. Temporary fix:
+logAfterHCGuesses['preferredTerm2'] = logAfterHCGuesses['preferredTerm_x'].where(logAfterHCGuesses['preferredTerm_x'].notnull(), logAfterHCGuesses['preferredTerm_y'])
+logAfterHCGuesses['SemanticTypeName2'] = logAfterHCGuesses['SemanticTypeName_x'].where(logAfterHCGuesses['SemanticTypeName_x'].notnull(), logAfterHCGuesses['SemanticTypeName_y'])
+logAfterHCGuesses.drop(['preferredTerm_x', 'preferredTerm_y',
+                          'SemanticTypeName_x', 'SemanticTypeName_y'], axis=1, inplace=True)
+logAfterHCGuesses.rename(columns={'preferredTerm2': 'preferredTerm',
+                                    'SemanticTypeName2': 'SemanticTypeName'}, inplace=True)
 
 
-logAfterGoldStandard.head(30)
+#%%
+# =========================================
+# 9. Apply matches from QuirkyMatches.xlsx
+# =========================================
+'''
+The QuirkyMatches data comes from phase 03, where a human selects entries 
+from a fuzzy-matching procedure. While the GoldStandard and HighConfidenceGuesses
+entries could be incorporated into follow-on fuzzy matching, clustering, and
+classification procedures, QuirkyMatches should ONLY be used here, to make
+exact matches. The intent here is to resolve high-frequency queries that are 
+misspelled, in a foreign language, are partial product/service names, etc.
+'''
+
+# Open QuirkyMatches
+QuirkyMatches = pd.read_excel('01_Import-transform_files/QuirkyMatches.xlsx')
+
+
+# Join new UMLS API adds to the current search log master
+logAfterQuirkyMatches = pd.merge(logAfterHCGuesses, QuirkyMatches, left_on='adjustedQueryCase', right_on='adjustedQueryCase', how='left')
+
+logAfterQuirkyMatches.columns
+'''
+'Referrer', 'Query', 'Timestamp', 'adjustedQueryCase',
+       'preferredTerm_x', 'SemanticTypeName_x', 'SemanticTypeName_y',
+       'preferredTerm_y'
+'''
+
+# Future: Look for a better way to do the above - MERGE WITH CONDITIONAL OVERWRITE. Temporary fix:
+logAfterQuirkyMatches['preferredTerm2'] = logAfterQuirkyMatches['preferredTerm_x'].where(logAfterQuirkyMatches['preferredTerm_x'].notnull(), logAfterQuirkyMatches['preferredTerm_y'])
+logAfterQuirkyMatches['SemanticTypeName2'] = logAfterQuirkyMatches['SemanticTypeName_x'].where(logAfterQuirkyMatches['SemanticTypeName_x'].notnull(), logAfterQuirkyMatches['SemanticTypeName_y'])
+logAfterQuirkyMatches.drop(['preferredTerm_x', 'preferredTerm_y',
+                          'SemanticTypeName_x', 'SemanticTypeName_y'], axis=1, inplace=True)
+logAfterQuirkyMatches.rename(columns={'preferredTerm2': 'preferredTerm',
+                                    'SemanticTypeName2': 'SemanticTypeName'}, inplace=True)
+
+
+# Re-sort full file
+logAfterQuirkyMatches = logAfterQuirkyMatches.sort_values(by='adjustedQueryCase', ascending=True)
+logAfterQuirkyMatches = logAfterQuirkyMatches.reset_index()
+logAfterQuirkyMatches.drop(['index'], axis=1, inplace=True)
 
 # Save to file so you can open in future sessions, if needed
-writer = pd.ExcelWriter(localDir + 'logAfterGoldStandard.xlsx')
-logAfterGoldStandard.to_excel(writer,'logAfterGoldStandard')
+writer = pd.ExcelWriter(localDir + 'logAfterQuirkyMatches.xlsx')
+logAfterQuirkyMatches.to_excel(writer,'logAfterQuirkyMatches')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
 
@@ -439,8 +493,8 @@ writer.save()
 # -----------------
 
 # Pie for percentage of rows assigned; https://pythonspot.com/matplotlib-pie-chart/
-totCount = len(logAfterGoldStandard)
-unassigned = logAfterGoldStandard['preferredTerm'].isnull().sum()
+totCount = len(logAfterQuirkyMatches)
+unassigned = logAfterQuirkyMatches['preferredTerm'].isnull().sum()
 assigned = totCount - unassigned
 labels = ['Assigned', 'Unassigned']
 sizes = [assigned, unassigned]
@@ -461,7 +515,7 @@ that has not been assigned yet.
 
 # Bar of SemanticTypeName categories, horizontal
 # Source: http://robertmitchellv.com/blog-bar-chart-annotations-pandas-mpl.html
-ax = logAfterGoldStandard['SemanticTypeName'].value_counts()[:20].plot(kind='barh', figsize=(10,6),
+ax = logAfterQuirkyMatches['SemanticTypeName'].value_counts()[:20].plot(kind='barh', figsize=(10,6),
                                                  color="slateblue", fontsize=10);
 ax.set_alpha(0.8)
 ax.set_title("Top 20 semantic types assigned after 'GoldStandard' processing with {} of {} unassigned".format(unassigned, totCount), fontsize=14)
@@ -477,9 +531,10 @@ plt.gcf().subplots_adjust(left=0.3)
 # Remove searchLogClean
 
 
+
 #%%
 # ===========================================================================================
-# 9. Create 'uniques' dataframe/file for APIs
+# 10. Create 'uniques' dataframe/file for APIs
 # ===========================================================================================
 '''
 Prepare a list of unique terms to process with API.
