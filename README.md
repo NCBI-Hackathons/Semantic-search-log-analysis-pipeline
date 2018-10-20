@@ -2,7 +2,7 @@
 
 > **Chart and respond to trends in information seeking, by classifying your web visitor queries to an ontology**
 
-(Code is under revision. Not fully functional.)
+(Code is under revision. Functional through phase 03.)
 
 The logs for internal search for large biomedical web sites can be too verbose and too inharmonious to make sense of. Logs for one NIH site contains more than 200,000 queries per month, with many variations on the same conceptual ideas. Aggregating log entries such as "ObamaCare" and "ACA" and "Affordable Care Act," for example, is far too difficult for a human to parse and take action on. This leads to several missed opportunities in communication management.
 
@@ -57,7 +57,7 @@ In the 02_Run_API.py file, under the #Initialize spellchecker is where the .aff 
 
 ## How to Analyze Your Own Data
 
-If you have direct access to your own search logs, start with the 01 py file. If you are exporting from Google Analytics > Behavior > Site Search, open the 01 file called listOfUniqueUnassignedAfterGS.xlsx, make your columns match it, and start with the 02 py file. You will need to remove all procedures for dataframes starting with "log."
+If you have direct access to your own search logs, start with the 01 py file. If you are exporting from Google Analytics > Behavior > Site Search, open the 01 file called listOfUniqueUnassignedAfterPhase1.xlsx, make your columns match it, and start with the 02 py file. You will need to remove all procedures for dataframes starting with "log."
 
 
 ## Workflow
