@@ -55,6 +55,9 @@ The repo includes all the tools to make new dictionaries whenever the SPECIALIST
 In the 02_Run_API.py file, under the #Initialize spellchecker is where the .aff and .dic files you create should be listed. More than one set of dictionaries can be listed, I believe.
 
 
+## How to Analyze Your Own Data
+
+If you have direct access to your own search logs, start with the 01 py file. If you are exporting from Google Analytics > Behavior > Site Search, open the 01 file called listOfUniqueUnassignedAfterGS.xlsx, make your columns match it, and start with the 02 py file.
 
 
 ## Workflow
