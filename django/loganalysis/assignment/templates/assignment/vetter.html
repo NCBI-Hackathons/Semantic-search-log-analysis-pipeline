@@ -2,32 +2,36 @@
 
 {% block contents %}
 
-<h1>Fuzzy-match vetting tool</h1>
+<h1>Confirm new high-confidence guesses</h1>
 
-  <p>Approve the category suggested by fuzzy matching, or assign something different, one <strong>Visitor query</strong> at a time. <a href="instructions-status.html">Instructions-Status</a>. </p>
+  <p>Approve the category suggested by fuzzy matching, or assign something different, one <strong>Visitor query</strong> at a time. <a href="instructions-status.html">Instructions-Status</a>. You can make more assignments with <a href="http://localhost:8000/fuzzy/">Assign high-confidence guesses.</a></p>
 
 <table>
     <tr>
-        <td>adjustedQueryCase (Visitor query)</td>
-        <td>preferredTerm (Software suggests)</td>
-        <td>One of these?</td>
-        <td>NewSemanticTypeName</td>
-        <td>Times searched</td>
+        <th>Original query<br>
+        Software suggests...</th>
+        <th>Proposed broader category</th>
+        <th>Reviewer options</th>
+        <th style="min-width:16rem;">Check Google<br>
+        Check pubmed.gov</th>
+        <th>Times searched</th>
     </tr>
 {% for match, match_form in matches %}
     <tr>
-        <td>{{ match.adjustedQueryCase }}</td>
-        <td>{{ match.preferredTerm }}</td>
+        <td>o: {{ match.adjustedQueryCase }}<br>
+        s: {{ match.preferredTerm }}</td>
+        <td>{{ match.NewSemanticTypeName }}</td>
         <td>
             <form method="POST">
             {% csrf_token %}
             {{ match_form.query_id.as_hidden }}
             <input type="submit" name="Okay" value="Okay">
             <input type="submit" name="Drop Row" value="Drop Row">
-            <input type="submit" name="Drop Preferred" value="Drop Preferred">
+            <input type="submit" name="Drop Preferred" value="Drop preferredTerm">
             </form>
         </td>
-        <td>{{ match.NewSemanticTypeName }}</td>
+        <td><a href="https://www.google.com/search?q={{ match.adjustedQueryCase }}" target="_blank">g: {{ match.adjustedQueryCase }}</a><br>
+        <a href="https://www.ncbi.nlm.nih.gov/pubmed?term=%22{{match.adjustedQueryCase}}%22" target="_blank">p: {{ match.adjustedQueryCase }}</a></td>
         <td>{{ match.timesSearched }}</td>
     </tr>
 {% endfor %}
