@@ -5,7 +5,7 @@ Created on Wed Jun 27 09:20:01 2018
 
 @authors: dan.wendling@nih.gov, 
 
-Last modified: 2018-10-20
+Last modified: 2018-10-15
 
 ** Site-search log file analyzer, Part 1 **
 
@@ -533,22 +533,22 @@ plt.gcf().subplots_adjust(left=0.3)
 
 
 #%%
-# ===========================================================================================
+# =============================================
 # 10. Create 'uniques' dataframe/file for APIs
-# ===========================================================================================
+# =============================================
 '''
 Prepare a list of unique terms to process with API.
 
 Re-starting?
-logAfterGoldStandard = pd.read_excel(localDir + 'logAfterGoldStandard.xlsx')
+listOfUniqueUnassignedAfterPhase1 = pd.read_excel(localDir + 'listOfUniqueUnassignedAfterPhase1.xlsx')
 '''
 
 # Unique unassigned terms and frequency of occurrence
-listOfUniqueUnassignedAfterGS = logAfterGoldStandard[pd.isnull(logAfterGoldStandard['preferredTerm'])] # was SemanticGroup
-listOfUniqueUnassignedAfterGS = listOfUniqueUnassignedAfterGS.groupby('adjustedQueryCase').size()
-listOfUniqueUnassignedAfterGS = pd.DataFrame({'timesSearched':listOfUniqueUnassignedAfterGS})
-listOfUniqueUnassignedAfterGS = listOfUniqueUnassignedAfterGS.sort_values(by='timesSearched', ascending=False)
-listOfUniqueUnassignedAfterGS = listOfUniqueUnassignedAfterGS.reset_index()
+listOfUniqueUnassignedAfterPhase1 = logAfterQuirkyMatches[pd.isnull(logAfterQuirkyMatches['preferredTerm'])] # was SemanticGroup
+listOfUniqueUnassignedAfterPhase1 = listOfUniqueUnassignedAfterPhase1.groupby('adjustedQueryCase').size()
+listOfUniqueUnassignedAfterPhase1 = pd.DataFrame({'timesSearched':listOfUniqueUnassignedAfterPhase1})
+listOfUniqueUnassignedAfterPhase1 = listOfUniqueUnassignedAfterPhase1.sort_values(by='timesSearched', ascending=False)
+listOfUniqueUnassignedAfterPhase1 = listOfUniqueUnassignedAfterPhase1.reset_index()
 
 
 # ---------------------------------------------------------------
@@ -559,8 +559,8 @@ Act based on what the dataframes say; drop, modify, etc.
 '''
 
 # Save to file so you can open in future sessions
-writer = pd.ExcelWriter(localDir + 'listOfUniqueUnassignedAfterGS.xlsx')
-listOfUniqueUnassignedAfterGS.to_excel(writer,'listOfUniqueUnassignedAfterGS')
+writer = pd.ExcelWriter(localDir + 'listOfUniqueUnassignedAfterPhase1.xlsx')
+listOfUniqueUnassignedAfterPhase1.to_excel(writer,'listOfUniqueUnassignedAfterPhase1')
 # df2.to_excel(writer,'Sheet2')
 writer.save()
 
