@@ -1,34 +1,39 @@
 {% extends "assignment/layout.html" %}
 
 {% block contents %}
-<h1>Fuzzy match approval tool</h1>
+<h1>Assign high-confidence guesses</h1>
+ <p>Use this interface to make manual assignments for frequently searched terms; this will provide correct matches for the machine learning model to learn from. To vet selections, see <a href="http://localhost:8000/fuzzy/fuzzyVetter">Confirm new high-confidence guesses.</a> When a term is repeated (multiple semantic types), click for all.</p>
 
 <table>
     <tr>
-        <td>adjustedQueryCase (Visitor query)</td>
-        <td>preferredTerm (Software suggests)</td>
-        <td>One of these?</td>
-        <td>Based on token...</td>
-        <td>Times searched</td>
+        <th>Original query<br>
+        Software suggests...</th>
+        <th>Click an option</th>
+        <th style="min-width:16rem;">Check Google<br>
+        Check pubmed.gov</th>
+        <th>Based on token...</th>
+        <th>Times searched</v>
     </tr>
 {% for match, match_form in matches %}
     <tr>
-        <td>{{ match.adjustedQueryCase }}</td>
-        <td>{{ match.preferredTerm }}</td>
+        <td>o: {{ match.adjustedQueryCase }}<br>
+        s: <span style="text-transform:lowercase;">{{ match.preferredTerm }}</span></td>
         <td>
             <form method="POST">
             {% csrf_token %}
             {{ match_form.query_id.as_hidden }}
             <input type="submit" name="Ignore" value="Ignore">
             <input type="submit" name="Accept" value="Accept">
-            <input type="submit" name="NLM Product/Service" value="NLM Product/Service">
+            <input type="submit" name="NLM Product/Service" value="NLM Product/Service"><br>
             <input type="submit" name="Human" value="Human">
             <input type="submit" name="Journal Name" value="Journal Name">
-            <input type="submit" name="Add to RegEx" value="Add to RegEx">
+            <input type="submit" name="Add to RegEx" value="Add to RegEx"><br>
             <input type="submit" name="Foreign" value="Foreign">
             <input type="submit" name="Combo" value="Combo">
             </form>
         </td>
+        <td><a href="https://www.google.com/search?q={{ match.adjustedQueryCase }}" target="_blank">g: {{ match.adjustedQueryCase }}</a><br>
+        <a href="https://www.ncbi.nlm.nih.gov/pubmed?term=%22{{match.adjustedQueryCase}}%22" target="_blank">p: {{ match.adjustedQueryCase }}</a></td>
         <td>{{ match.FuzzyToken }}</td>
         <td>{{ match.timesSearched }}</td>
     </tr>
