@@ -59,6 +59,8 @@ In the 02_Run_API.py file, under the #Initialize spellchecker is where the .aff 
 
 If you have direct access to your own search logs, start with the 01 py file. If you are exporting from Google Analytics > Behavior > Site Search, open the 01 file called listOfUniqueUnassignedAfterPhase1.xlsx, make your columns match it, and start with the 02 py file. You will need to remove all procedures for dataframes starting with "log."
 
+Recommendation for Google Analytics users who have configured site search: Create custom report with two Dimensions, Start Page and Search Term, and one metric, Total Unique Searches. Set filter for Start Page URL to restrict to a domain, if needed.
+
 
 ## Workflow
 
