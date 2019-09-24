@@ -2,7 +2,7 @@
 
 > **Chart and respond to trends in information seeking, by classifying your web visitor queries to an ontology**
 
-*** Many thanks to Jonathan Street, Nicholas Johnson, and the other members of our September 2018 Hackathon Team!! ***
+***Many thanks to Jonathan Street, Nicholas Johnson, and the other members of our September 2018 Hackathon Team!!***
 
 (Code is under revision. Functional through phase 03.)
 
