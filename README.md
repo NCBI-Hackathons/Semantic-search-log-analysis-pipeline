@@ -2,6 +2,8 @@
 
 > **Chart and respond to trends in information seeking, by classifying your web visitor queries to an ontology**
 
+*** Many thanks to Jonathan Street, Nicholas Johnson, and the other members of our September 2018 Hackathon Team!! ***
+
 (Code is under revision. Functional through phase 03.)
 
 The logs for internal search for large biomedical web sites can be too verbose and too inharmonious to make sense of. Logs for one NIH site contains more than 200,000 queries per month, with many variations on the same conceptual ideas. Aggregating log entries such as "ObamaCare" and "ACA" and "Affordable Care Act," for example, is far too difficult for a human to parse and take action on. This leads to several missed opportunities in communication management.
