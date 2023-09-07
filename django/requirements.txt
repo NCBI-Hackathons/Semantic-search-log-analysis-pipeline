@@ -1,2 +1,2 @@
-django>=2.2.4
+django
 pytz==2018.5
